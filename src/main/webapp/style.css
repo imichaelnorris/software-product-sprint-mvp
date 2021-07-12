@@ -1,0 +1,97 @@
+body,
+html {
+    height: 100%;
+    margin: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+.bg {
+    /* The image used */
+    background-image: url("./images/background.png");
+    /* Full height */
+    height: 100%;
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.options {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+label.form-check-label {
+    color: white;
+}
+
+.categories,
+.allergies {
+    background-color: #67582b;
+    /* width: 15em;
+    height: 5em; */
+    padding: 1em 5em;
+    margin-top: 20%;
+}
+
+.form-check {
+    padding-left: 2em !important;
+}
+
+.categoryTitle {}
+
+.btn {
+    padding: .5rem 3rem !important;
+}
+
+.btn-dark {
+    background-color: #582020 !important;
+    border-color: #582020 !important;
+}
+
+.buttonClass {
+    display: flex;
+    justify-content: center;
+    margin-top: 3em;
+}
+
+.foodcards {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.logo {
+    display: flex;
+    /* margin-top: 1em;
+    margin-left: 1em; */
+}
+
+.logotitle {
+    margin-top: 2.3em !important;
+}
+
+.logotitle,
+.logoimage {
+    margin-top: 1em;
+}
+
+.logoimage {
+    margin-left: 1.5em;
+}
+
+.foodcards {
+    padding-top: 7em;
+    padding-bottom: 15em;
+}
+
+.secondsection {
+    display: flex;
+    justify-content: center;
+}
+
+.hideelement {
+    display: none !important;
+}
