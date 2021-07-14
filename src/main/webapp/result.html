@@ -11,6 +11,10 @@
       integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
       crossorigin="anonymous"
     />
+
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css' rel='stylesheet' />
+    
     <style>
         .img-fluid{
             height: 450px !important;
@@ -33,5 +37,18 @@
       integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
       crossorigin="anonymous"
     ></script>
+
+    <div id='map' style='width: 400px; height: 300px;'></div>
+    
+    <script>
+    mapboxgl.accessToken = 'pk.eyJ1IjoidGRhY2F5YW4iLCJhIjoiY2tyMWY5b2h2MGdwMzJ3cnpjMXBoaXh4ciJ9.ZgutlFxWK6MQx7Mhz7Njfg';
+    var map = new mapboxgl.Map({
+        container: 'map', // container ID
+        style: 'mapbox://styles/mapbox/streets-v11', // style URL
+        center: [-74.5, 40], // starting position [lng, lat]
+        zoom: 9 // starting zoom
+    });
+    </script>
+
   </body>
 </html>
