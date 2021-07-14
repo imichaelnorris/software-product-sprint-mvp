@@ -9,9 +9,11 @@
     <link rel="stylesheet" href="style.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="foodRecommendationAPI.js"></script>
+
 </head>
 
-<body onload="hideFunction()">
+<body onload="hideFunction(); initDB();">
     <div class="bg section1" id="section1">
         <div class="logo">
             <img src="./images/myfoodie.png" class="logoimage" />
@@ -20,53 +22,128 @@
             </div>
         </div>
         <div class="options">
+            
+            <!-- Checkbox for meal type -->
+            <div class="meal-type">
+                <h4 class="categoryTitle" style="color: white;">Meal Type</h4>
+                <div class="formelements">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="breakfast" id="breakfastMeal">
+                        <label class="form-check-label" for="breakfastMeal">
+                            Breakfast
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input not-breakfast" type="checkbox" value="" id="lunchDinnerMeal">
+                        <label class="form-check-label" for="lunchDinnerMeal">
+                            Lunch/Dinner
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input not-breakfast" type="checkbox" value="" id="dessertMeal">
+                        <label class="form-check-label" for="dessertMeal">
+                            Dessert
+                        </label>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- TODO: add Cuisine Type -->
+            <!-- Checkbox for cuisine type -->
+            <!-- <div class="cuisine">
+                <h4 class="categoryTitle" style="color: white;">Cuisine</h4>
+                <div class="formelements">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" disabled>
+                        <label class="form-check-label" for="flexRadioDefault1">
+                        Default radio
+                    </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked disabled>
+                        <label class="form-check-label" for="flexRadioDefault2">
+                        Default checked radio
+                    </label>
+                    </div>
+                </div>
+            </div> -->
+
+            <!-- Checkbox for Preferences -->
             <div class="categories">
                 <h4 class="categoryTitle" style="color: white;">Categories</h4>
                 <div class="formelements">
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-                        <label class="form-check-label" for="flexRadioDefault1">
-                        Default radio
-                    </label>
+                        <input class="form-check-input preference" type="checkbox" value="" id="prefMeat">
+                        <label class="form-check-label" for="prefMeat">
+                            Meat
+                        </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
-                        <label class="form-check-label" for="flexRadioDefault2">
-                        Default checked radio
-                    </label>
+                        <input class="form-check-input preference" type="checkbox" value="" id="prefSeafood">
+                        <label class="form-check-label" for="prefSeafood">
+                            Seafood
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input preference" type="checkbox" value="" id="prefPasta">
+                        <label class="form-check-label" for="prefPasta">
+                            Pasta
+                        </label>
+                    </div>
+                    <!-- TODO: Create an extra rec-card for the vegan/vegetarian option if another box is checked -->
+                    <div class="form-check">
+                        <input class="form-check-input preference" type="checkbox" value="" id="prefVeggie">
+                        <label class="form-check-label" for="prefVeggie">
+                            Vegetarian/Vegan
+                        </label>
                     </div>
                 </div>
             </div>
 
+            <!-- Checkbox for Allergies -->
+            <!-- Check for reference: https://www.codexworld.com/multi-select-dropdown-list-with-checkbox-jquery/ -->
+            <!-- TODO: Change multi-select box to multi-select with checkboxes -->
             <div class="allergies">
-                <h4 class="categoryTitle" style="color: white;">Allergies</h4>
-                <div class="formelements">
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="flexRadioDefault1" id="flexRadioDefault3">
-                        <label class="form-check-label" for="flexRadioDefault1">
-                        Default radio
-                    </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="flexRadioDefault1" id="flexRadioDefault4" checked>
-                        <label class="form-check-label" for="flexRadioDefault2">
-                        Default checked radio
-                    </label>
-                    </div>
-                </div>
+                <h4 class="categoryTitle" style="color: white;">Other</h4>
+                <select name="allergy-select" multiple="multi-select-dropdown-list-with-checkbox-jquery" id="allergy-select">
+                    <option value="dairy-free">Dairy-free</option>
+                    <option value="egg-free">Egg-Free</option>
+                    <option value="fish-free">Fish-Free</option>
+                    <option value="crustacean-free">Crustacean-Free</option>
+                    <option value="gluten-free">Gluten-free</option>
+                    <option value="kosher">Kosher</option>
+                    <option value="pork-free">Pork-free</option>
+                    <option value="peanut-free">Peanut-Free</option>
+                    <option value="red-meat-free">Red Meat-Free</option>
+                    <option value="soy-free">Soy-free</option>
+                    <option value="tree-nut-free">Tree-Nut-Free</option>
+                    <option value="wheat-free">Wheat-Free</option>
+                </select>
             </div>
         </div>
+
         <div class="buttonClass">
-            <button type="button" class="btn btn-dark">Suggest Random Food</button>
+            <button type="button" class="btn btn-dark" id="suggest" onclick="generateRecommendation()">Suggest Random Food</button>
             <!-- <a href="#section2" class="btn btn-dark">Suggest Random Food</a> -->
         </div>
+
     </div>
+
+    <!-- TODO: add section for user location -->
     <div class="section2" id="section2">
         <div class="secondsection">
             <h2>Food List</h2>
         </div>
         <div class="foodcards">
-            <div class="card" style="width: 18rem;">
+            <div class="card" style="width: 18rem;" id="rec-card-0">
+                <img class="card-img-top" src="./images/burger.jpg" alt="Card image cap" >
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <a href="./result.html" class="btn btn-primary">Go somewhere</a>
+                </div>
+            </div>
+            <div class="card" style="width: 18rem;" id="rec-card-1">
                 <img class="card-img-top" src="./images/burger.jpg" alt="Card image cap">
                 <div class="card-body">
                     <h5 class="card-title">Card title</h5>
@@ -74,15 +151,7 @@
                     <a href="./result.html" class="btn btn-primary">Go somewhere</a>
                 </div>
             </div>
-            <div class="card" style="width: 18rem;">
-                <img class="card-img-top" src="./images/burger.jpg" alt="Card image cap">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="./result.html" class="btn btn-primary">Go somewhere</a>
-                </div>
-            </div>
-            <div class="card" style="width: 18rem;">
+            <div class="card" style="width: 18rem;" id="rec-card-2">
                 <img class="card-img-top" src="./images/burger.jpg" alt="Card image cap">
                 <div class="card-body">
                     <h5 class="card-title">Card title</h5>
@@ -100,7 +169,28 @@
             element.classList.add("hideelement");
         }
 
-        $("button").click(function() {
+        $("#breakfastMeal").click(function() {
+            if (this.checked) {
+                $("input.preference").prop( "checked", false );
+                $("input.preference").attr("disabled", true);
+                $("input.not-breakfast").prop( "checked", false );
+                $("input.not-breakfast").attr("disabled", true);
+            } else {
+                $("input.preference").removeAttr("disabled");
+                $("input.not-breakfast").removeAttr("disabled");
+            }
+        })
+        $("#lunchDinnerMeal").click(function() {
+            if (this.checked) {
+                $("#breakfastMeal").prop( "checked", false );
+                $("#breakfastMeal").attr("disabled", true);
+            } else {
+                $("#breakfastMeal").removeAttr("disabled");
+            }
+        })
+
+
+        $("#suggest").click(function() {
             var element = document.getElementById("section2");
             element.classList.remove("hideelement");
             $('html,body').animate({
