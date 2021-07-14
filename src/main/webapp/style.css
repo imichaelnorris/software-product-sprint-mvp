@@ -28,6 +28,8 @@ label.form-check-label {
     color: white;
 }
 
+.meal-type,
+.cuisine,
 .categories,
 .allergies {
     background-color: #67582b;
