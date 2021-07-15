@@ -22,7 +22,7 @@
             </div>
         </div>
         <div class="options">
-            
+
             <!-- Checkbox for meal type -->
             <div class="meal-type">
                 <h4 class="categoryTitle" style="color: white;">Meal Type</h4>
@@ -47,7 +47,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <!-- TODO: add Cuisine Type -->
             <!-- Checkbox for cuisine type -->
             <!-- <div class="cuisine">
@@ -136,7 +136,7 @@
         </div>
         <div class="foodcards">
             <div class="card" style="width: 18rem;" id="rec-card-0">
-                <img class="card-img-top" src="./images/burger.jpg" alt="Card image cap" >
+                <img class="card-img-top" src="./images/burger.jpg" alt="Card image cap">
                 <div class="card-body">
                     <h5 class="card-title">Card title</h5>
                     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
@@ -171,9 +171,9 @@
 
         $("#breakfastMeal").click(function() {
             if (this.checked) {
-                $("input.preference").prop( "checked", false );
+                $("input.preference").prop("checked", false);
                 $("input.preference").attr("disabled", true);
-                $("input.not-breakfast").prop( "checked", false );
+                $("input.not-breakfast").prop("checked", false);
                 $("input.not-breakfast").attr("disabled", true);
             } else {
                 $("input.preference").removeAttr("disabled");
@@ -182,7 +182,7 @@
         })
         $("#lunchDinnerMeal").click(function() {
             if (this.checked) {
-                $("#breakfastMeal").prop( "checked", false );
+                $("#breakfastMeal").prop("checked", false);
                 $("#breakfastMeal").attr("disabled", true);
             } else {
                 $("#breakfastMeal").removeAttr("disabled");
