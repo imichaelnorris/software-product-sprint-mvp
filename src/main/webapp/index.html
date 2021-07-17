@@ -11,20 +11,30 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="foodRecommendationAPI.js"></script>
 
+    <!-- <style>
+    .hidden {
+        display: none;
+    }
+    div {
+        border: 1px solid black;
+    }
+
+    </style>  -->
+
 </head>
 
 <body onload="hideFunction(); initDB();">
-    <div class="bg section1" id="section1">
+    <div class="bg section1" id="section1" style="position: relative;">
         <div class="logo">
             <img src="./images/myfoodie.png" class="logoimage" />
             <div class="logotitle">
                 <h4 style="color: white; font-family: Georgia, 'Times New Roman', Times, serif;">MyFoodie</h4>
             </div>
         </div>
+        
         <div class="options">
-            
             <!-- Checkbox for meal type -->
-            <div class="meal-type">
+            <div class="meal-type hidden">
                 <h4 class="categoryTitle" style="color: white;">Meal Type</h4>
                 <div class="formelements">
                     <div class="form-check">
@@ -69,7 +79,7 @@
             </div> -->
 
             <!-- Checkbox for Preferences -->
-            <div class="categories">
+            <div class="categories hidden">
                 <h4 class="categoryTitle" style="color: white;">Categories</h4>
                 <div class="formelements">
                     <div class="form-check">
@@ -103,15 +113,12 @@
             <!-- Checkbox for Allergies -->
             <!-- Check for reference: https://www.codexworld.com/multi-select-dropdown-list-with-checkbox-jquery/ -->
             <!-- TODO: Change multi-select box to multi-select with checkboxes -->
-            <div class="allergies">
+            <div class="allergies hidden">
                 <h4 class="categoryTitle" style="color: white;">Other</h4>
                 <select name="allergy-select" multiple="multi-select-dropdown-list-with-checkbox-jquery" id="allergy-select">
-                    <option value="dairy-free">Dairy-free</option>
                     <option value="egg-free">Egg-Free</option>
                     <option value="fish-free">Fish-Free</option>
-                    <option value="crustacean-free">Crustacean-Free</option>
                     <option value="gluten-free">Gluten-free</option>
-                    <option value="kosher">Kosher</option>
                     <option value="pork-free">Pork-free</option>
                     <option value="peanut-free">Peanut-Free</option>
                     <option value="red-meat-free">Red Meat-Free</option>
@@ -122,7 +129,7 @@
             </div>
         </div>
 
-        <div class="buttonClass">
+        <div class="buttonClass hidden">
             <button type="button" class="btn btn-dark" id="suggest" onclick="generateRecommendation()">Suggest Random Food</button>
             <!-- <a href="#section2" class="btn btn-dark">Suggest Random Food</a> -->
         </div>
