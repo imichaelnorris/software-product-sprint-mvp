@@ -7,24 +7,305 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="cardImage.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="foodRecommendationAPI.js"></script>
 
+    <style>
+        /* div {
+            border: 1px solid black;
+        } */
+        
+        .hidden {
+            display: none;
+        }
+        /* .hidden-new {
+            display: none;
+        } */
+        
+        .yellow {
+            background-color: yellow;
+        }
+        
+        .cyan {
+            background-color: cyan;
+        }
+        
+        #div1,
+        #div2,
+        #div3 {
+            position: absolute;
+        }
+        
+        #div2,
+        #div1 {
+            display: none;
+        }
+        
+        #buttons {
+            position: absolute;
+            bottom: 10px
+        }
+    </style>
+
 </head>
 
 <body onload="hideFunction(); initDB();">
-    <div class="bg section1" id="section1">
+    <div class="bg section1" id="section1" style="position: relative;">
+        <!-- Header -->
         <div class="logo">
             <img src="./images/myfoodie.png" class="logoimage" />
             <div class="logotitle">
                 <h4 style="color: white; font-family: Georgia, 'Times New Roman', Times, serif;">MyFoodie</h4>
             </div>
         </div>
-        <div class="options">
 
+
+        <!-- -------------------------------------------------------------------------------------------------- -->
+
+        <!-- Test Area for UI Update -->
+        <div class="container-fluid hidden-new" id="div1">
+            <div class="row">
+                <div class="col-1 side-label">
+                    <h1>M<br>E<br>A<br>L</h1>
+                </div>
+                <div class="col-11 meal foodcards">
+                    <div class="row" style="width:100%">
+                        <div class="row justify-content-center">
+                            <div class="meal card clickable" id="breakfastOpt">
+                                <div class="card-body">
+                                    <h5 class="card-title">Breakfast</h5>
+                                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                </div>
+                            </div>
+                            <div class="meal card clickable" id="lunchDinnerOpt">
+                                <div class="card-body">
+                                    <h5 class="card-title">Lunch/Dinner</h5>
+                                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                </div>
+                            </div>
+                            <div class="meal card clickable" id="dessertOpt">
+                                <div class="card-body">
+                                    <h5 class="card-title">Dessert</h5>
+                                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="backNextClass justify-content-end">
+                            <button type="button" class="btn btn-dark" onclick="showElement('div2')">
+                                Next
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- -------------------------------------------------------------------------------------------------- -->
+        <div class="container-fluid hidden-new" id="div2">
+            <div class="row justify-content-end">
+                <div class="col-1 backToOne"></div>
+                <div class="col-1 side-label">
+                    <h1>
+                        P<br>R<br>E<br>F<br>E<br>R<br>E<br>N<br>C<br>E<br>S
+                    </h1>
+                </div>
+                <div class="col-10 pref foodcards">
+                    <div class="row" style="padding: 1px;">
+                        <div class="row">
+                            <h2>Meat</h2>
+                        </div>
+                        <div class="row" style="padding: 1px; justify-content: space-evenly; overflow:auto">
+                            <div class="pref meat card clickable" id="chickenOpt">
+                                <div class="card-body">
+                                    <h5 class="card-title">Chicken</h5>
+                                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                </div>
+                            </div>
+                            <div class="pref meat card clickable" id="beefOpt">
+                                <div class="card-body">
+                                    <h5 class="card-title">Beef</h5>
+                                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                </div>
+                            </div>
+                            <div class="pref meat card clickable" id="porkOpt">
+                                <div class="card-body">
+                                    <h5 class="card-title">Pork</h5>
+                                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                </div>
+                            </div>
+                            <div class="pref meat card clickable" id="goatOpt">
+                                <div class="card-body">
+                                    <h5 class="card-title">Goat</h5>
+                                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                </div>
+                            </div>
+                            <div class="pref meat card clickable" id="lambOpt">
+                                <div class="card-body">
+                                    <h5 class="card-title">Lamb</h5>
+                                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <h2> <br>Other</h2>
+                        </div>
+                        <div class="row" style="padding: 1px; justify-content: space-evenly;">
+                            <div class="pref other card clickable" id="seafoodOpt">
+                                <div class="card-body">
+                                    <h5 class="card-title">Seafood</h5>
+                                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                </div>
+                            </div>
+                            <div class="pref other card clickable" id="pastaOpt">
+                                <div class="card-body">
+                                    <h5 class="card-title">Pasta</h5>
+                                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                </div>
+                            </div>
+                            <div class="pref other card clickable" id="veggieOpt">
+                                <div class="card-body">
+                                    <h5 class="card-title">Vegetarian</h5>
+                                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                </div>
+                            </div>
+                            <div class="pref other card clickable" id="veganOpt">
+                                <div class="card-body">
+                                    <h5 class="card-title">Vegan</h5>
+                                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="backNextClass justify-content-between">
+                            <button type="button" class="btn btn-dark" onclick="hideElement('div2')">
+                                Back
+                            </button>
+                            <button type="button" class="btn btn-dark" onclick="showElement('div3')">
+                                Next
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!-- -------------------------------------------------------------------------------------------------- -->
+        <div class="container-fluid hidden-new" id="div3">
+            <div class="row justify-content-end">
+                <div class="col-1 backToOne"></div>
+                <div class="col-1 backToTwo"></div>
+                <div class="col-1 side-label">
+                    <h1>
+                        A<br>L<br>L<br>E<br>R<br>G<br>I<br>E<br>S
+                    </h1>
+                </div>
+                <div class="col-9 alg foodcards">
+                    <div class="row">
+                        <div class="row">
+                            <div class="card clickable" style="width: 18rem;">
+                                <div class="card-body">
+                                    <h5 class="card-title">Card title</h5>
+                                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                </div>
+                            </div>
+                            <div class="card clickable" style="width: 18rem;">
+                                <div class="card-body">
+                                    <h5 class="card-title">Card title</h5>
+                                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="backNextClass justify-content-between">
+                            <button type="button" class="btn btn-dark" onclick="hideElement('div2')">
+                                Back
+                            </button>
+                            <button type="button" class="btn btn-dark" onclick="showElement('div3')">
+                                Next
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- -------------------------------------------------------------------------------------------------- -->
+        <div class="justify-content-center hidden-new" id="buttons">
+            <button name="toggle-div1"> Hide Div 1</button>
+            <button name="toggle-div2"> Hide Div 2</button>
+            <button name="toggle-div3"> Hide Div 3</button>
+            <button name="switch"> Toggle both</button>
+        </div>
+        <!-- -------------------------------------------------------------------------------------------------- -->
+        <script>
+            $(document).ready(
+                function() {
+                    $("[name*='switch']").click(
+                        function() {
+                            toggleElement("div1", "div2");
+                        }
+                    );
+
+                    $("[name*='toggle-']").click(
+                        function() {
+                            var trigger_id = $(this).attr("name").replace("toggle-", "");
+                            toggleElement(trigger_id);
+                        }
+                    );
+                });
+
+            function toggleElement(...arr) {
+                for (var id of arr)
+                    var isVisible = $("#" + id).css('display') == "none" ? showElement(id) : hideElement(id);
+            }
+
+            function showElement(id) {
+                $("#" + id).show();
+            }
+
+            function hideElement(id) {
+                $("#" + id).hide();
+            }
+
+            $(".backToOne").click(function() {
+                hideElement("div2")
+                hideElement("div3")
+            })
+            $(".backToTwo").click(function() {
+                hideElement("div3")
+            })
+
+            // Select Cards
+            var currentItem = null;
+            $(".clickable").click(function(e) {
+                if ($(this).hasClass("selected")) {
+                    $(this).removeClass("selected")
+                    currentItem = null;
+                } else {
+                    currentItem = $(this).addClass("selected");
+                }
+                e.stopPropagation();
+            });
+
+            // Deselects all selected elements when clicked
+            // $(document).click(function() {
+            //     $(".clickable.selected").removeClass("selected");
+            // });
+        </script>
+
+
+
+
+
+
+
+
+
+
+
+
+        <div class="options hidden">
             <!-- Checkbox for meal type -->
-            <div class="meal-type">
+            <div class="meal-type hidden">
                 <h4 class="categoryTitle" style="color: white;">Meal Type</h4>
                 <div class="formelements">
                     <div class="form-check">
@@ -69,7 +350,7 @@
             </div> -->
 
             <!-- Checkbox for Preferences -->
-            <div class="categories">
+            <div class="categories hidden">
                 <h4 class="categoryTitle" style="color: white;">Categories</h4>
                 <div class="formelements">
                     <div class="form-check">
@@ -103,18 +384,15 @@
             <!-- Checkbox for Allergies -->
             <!-- Check for reference: https://www.codexworld.com/multi-select-dropdown-list-with-checkbox-jquery/ -->
             <!-- TODO: Change multi-select box to multi-select with checkboxes -->
-            <div class="allergies">
+            <div class="allergies hidden">
                 <h4 class="categoryTitle" style="color: white;">Other</h4>
                 <select name="allergy-select" multiple="multi-select-dropdown-list-with-checkbox-jquery" id="allergy-select">
-                    <option value="dairy-free">Dairy-free</option>
+                    <option value="alcohol-free">Alcohol-Free</option>
                     <option value="egg-free">Egg-Free</option>
                     <option value="fish-free">Fish-Free</option>
-                    <option value="crustacean-free">Crustacean-Free</option>
+                    <option value="shellfish-free">Shellfish-Free</option>
                     <option value="gluten-free">Gluten-free</option>
-                    <option value="kosher">Kosher</option>
-                    <option value="pork-free">Pork-free</option>
                     <option value="peanut-free">Peanut-Free</option>
-                    <option value="red-meat-free">Red Meat-Free</option>
                     <option value="soy-free">Soy-free</option>
                     <option value="tree-nut-free">Tree-Nut-Free</option>
                     <option value="wheat-free">Wheat-Free</option>
@@ -122,11 +400,12 @@
             </div>
         </div>
 
-        <div class="buttonClass">
-            <button type="button" class="btn btn-dark" id="suggest">Suggest Random Food</button>
-            <!-- <a href="#section2" class="btn btn-dark">Suggest Random Food</a> -->
-        </div>
-
+        <<<<<<< HEAD <div class="buttonClass">
+            <button type="button" class="btn btn-dark" id="suggest">Suggest Random Food</button> =======
+            <div class="buttonClass hidden">
+                <button type="button" class="btn btn-dark" id="suggest" onclick="generateRecommendation()">Suggest Random Food</button> >>>>>>> landing-page-update
+                <!-- <a href="#section2" class="btn btn-dark">Suggest Random Food</a> -->
+            </div>
     </div>
 
     <!-- TODO: add section for user location -->

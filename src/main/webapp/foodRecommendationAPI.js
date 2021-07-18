@@ -4,6 +4,7 @@ var MealDB = {};
 // var recommedations needs to be outside
 var recommendations = [];
 
+
 async function initDB() {
     const categories = [
         "Beef",
@@ -103,60 +104,34 @@ function getPreferences() {
 
 // FIXME: Edamam API confuses words like 'and' and 'with' when converting the MealDB API objects
 async function convertToEdamamObjects(options, tags) {
+    const foodList = randomRec(options, 3);
+    var temp = {}
 
-    let positionObject;
-    const temp = {};
+    for (var foodName of foodList) {
+        var response = null;
 
-    if (window.navigator.geolocation) {
-        await window.navigator.geolocation.getCurrentPosition((response) => {
-            positionObject = response
-        }, console.log);
-    }
+        if ("Vegan" in options || "Vegetarian" in options) {
+            response = await fetch("https://api.edamam.com/api/menu-items/v2/search?app_id=2ba0ec45&app_key=ac665ae3e41a33e09736700ec5a0c738&q=" + foodName + "&health=vegan&health=vegetarian" + tags)
+        } else {
+            response = await fetch("https://api.edamam.com/api/menu-items/v2/search?app_id=2ba0ec45&app_key=ac665ae3e41a33e09736700ec5a0c738&q=" + foodName + tags)
+        }
+        const results = await response.json();
 
-    for (var c of options) {
-        for (let i = 0; i < MealDB[c].length; i++) {
-            const foodName = MealDB[c][i].strMeal;
-            const query = foodName.replace(" ", "%20");
-            var response = null;
-
-            // TODO: Add Postal and Long and Lat fields to fetch request to better the search
-            if ("Vegan" in options || "Vegetarian" in options) {
-                response = await fetch(
-                    `https://api.edamam.com/api/menu-items/v2/search?app_id=2ba0ec45&app_key=ac665ae3e41a33e09736700ec5a0c738&q=${foodName}&lat=${positionObject.coords.latitude}&lon=${positionObject.coords.longitude}&health=vegan&health=vegetarian`
-                );
+        for (let i = 0; i < results.hints.length; i++) {
+            if (!temp[foodName]) {
+                temp[foodName] = [results.hints[i]]
             } else {
-                response = await fetch(
-                    `https://api.edamam.com/api/menu-items/v2/search?app_id=2ba0ec45&app_key=ac665ae3e41a33e09736700ec5a0c738&q=${foodName}&lat=${positionObject.coords.latitude}&lon=${positionObject.coords.longitude}${tags}`
-                );
-            }
-
-            const results = await response.json();
-
-            for (let i = 0; i < results.hints.length; i++) {
-                if (foodName in temp === false) {
-                    temp[foodName] = [results.hints[i]];
-                } else {
-                    temp[foodName].push(results.hints[i]);
-                }
+                temp[foodName].push(results.hints[i])
             }
         }
     }
-    recommendations = randomRec(temp, 3);
-    if (positionObject) {
-        postRecommendations(
-            options,
-            recommendations,
-            positionObject.coords.latitude,
-            positionObject.coords.longitude
-        );
-    } else {
-        postRecommendations(options, recommendations);
-    }
+
+    recommendations = convertToArray(temp);
+    postRecommendations(options, recommendations);
 }
 
 // Step 4: Randomly pick 3 food options and display to recommendation cards
-// TODO: Add timer delay to make transition smoother when random item suggestion is clicked again
-function postRecommendations(options, recommendations, lat = "", lon = "") {
+function postRecommendations(options, recommendations) {
     // TODO: Clean up Recommendation loops; too slow
     for (let i = 0; i < recommendations.length; i++) {
         var recMeal = recommendations[i].key;
@@ -180,22 +155,44 @@ function postRecommendations(options, recommendations, lat = "", lon = "") {
     }
 }
 
-function randomRec(dict, iter) {
+function convertToArray(dict) {
     var temp = [];
 
-    while (temp.length < iter) {
-        const index = Math.floor(Math.random() * Object.keys(dict).length);
-        const key = Object.keys(dict)[index];
+    for(let i = 0; i < Object.keys(dict).length; i++) {
+        const key = Object.keys(dict)[i]
+        console.log(dict)
+
 
         temp.push({
             key: key,
-            value: dict[key],
-        });
-
-        delete dict[key];
+            value: dict[key]
+        })
     }
+
+    console.log(temp)
+
     return temp;
 }
+
+function randomRec(categories, numItems) {
+    const availItems = []
+    const temp = []
+
+    for(var c of categories) {
+        for(let i = 0; i < MealDB[c].length; i++) {
+            availItems.push(MealDB[c][i].strMeal)
+        }
+    }
+
+    for(let i = 0; i < numItems; i++) {
+        var index = Math.floor(Math.random() * availItems.length)
+        temp.push(availItems[index])
+        availItems.splice(index, 1)
+    }
+
+    return temp;
+}
+
 
 function insert(arr, ...items) {
     arr.push(...items);

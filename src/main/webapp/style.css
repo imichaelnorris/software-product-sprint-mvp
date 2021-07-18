@@ -29,7 +29,6 @@ label.form-check-label {
 }
 
 .meal-type,
-.cuisine,
 .categories,
 .allergies {
     background-color: #67582b;
@@ -65,14 +64,17 @@ label.form-check-label {
     justify-content: space-evenly;
 }
 
+.foodcards {
+    padding-top: 7em;
+    padding-bottom: 15em;
+    background-color: rgba(140, 84, 84, 0.926);
+    max-height: 48em;
+}
+
 .logo {
     display: flex;
     /* margin-top: 1em;
     margin-left: 1em; */
-}
-
-.logotitle {
-    margin-top: 2.3em !important;
 }
 
 .logotitle,
@@ -80,13 +82,12 @@ label.form-check-label {
     margin-top: 1em;
 }
 
-.logoimage {
-    margin-left: 1.5em;
+.logotitle {
+    margin-top: 2.3em !important;
 }
 
-.foodcards {
-    padding-top: 7em;
-    padding-bottom: 15em;
+.logoimage {
+    margin-left: 1.5em;
 }
 
 .secondsection {
@@ -96,4 +97,79 @@ label.form-check-label {
 
 .hideelement {
     display: none !important;
+}
+
+::-webkit-scrollbar {
+    width: 0px;
+    background: transparent; /* make scrollbar transparent */
+}
+
+.backNextClass {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 1em;
+  height: 5em;
+}
+
+.backNextClass button {
+    height: 3em;
+}
+
+.clickable:hover {
+    filter: brightness(85%);
+}
+
+.selected { 
+    filter: brightness(75%);
+    border: 3px solid rgb(120, 120, 253) !important;
+}
+
+.side-label {
+    text-align: center;
+    border: 1px solid black;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    background-color: rgb(209, 143, 143);
+}
+
+/* Meal Elements */
+.meal.foodcards {
+    padding-top: 3em;
+    padding-bottom: 5em;
+}
+
+.meal.card {
+    margin-left: 1em;
+    margin-right: 1em;
+    height: 40em;
+    width: 25rem;
+}
+
+/* Preference Elements */
+.pref.foodcards {
+    padding-top: 2em;
+    flex-wrap: nowrap;
+    overflow-y: auto;
+    scroll-padding-bottom: 5em;
+}
+
+.pref.meat.card {
+    margin-left: 1em;
+    margin-right: 1em;
+    height: 15rem;
+    width: 15rem;
+}
+
+.pref.other.card {
+    flex: 0 0 auto !important;
+    margin-left: 1em;
+    margin-right: 1em;
+    height: 25rem;
+    width: 20rem;
+}
+
+/* Allergy Elements */
+.alg.foodcards {
+    padding-top: 3em;
+    padding-bottom: 5em;
+    height: 48em;
 }
