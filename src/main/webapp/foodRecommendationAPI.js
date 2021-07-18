@@ -27,7 +27,7 @@ async function initDB() {
     for (var c of categories) {
         const response = await fetch(
             "https://themealdb.com/api/json/v1/1/filter.php?c=" + c
-        );
+        )
         const foods = await response.json();
 
         for (let i = 0; i < foods.meals.length; i++) {
@@ -43,9 +43,9 @@ async function initDB() {
 }
 
 (async() => {
-    console.log('hey')
     MealDB = await initDB();
 })();
+
 
 function generateRecommendation() {
     var options = [];
@@ -68,7 +68,7 @@ function generateRecommendation() {
     for (let i = 0; i < temp.length; i++) {
         options = options.concat(temp[i]);
     }
-    console.log(options);
+
 
     // Step 2: Get Allergies and Filter out the allergies
     $("#allergy-select")
@@ -86,10 +86,8 @@ function generateRecommendation() {
 }
 
 async function getLocation(options, tags) {
-    console.log("reached location")
     if (window.navigator.geolocation) {
         await window.navigator.geolocation.getCurrentPosition((response) => {
-            console.log(response)
             convertToEdamamObjects(options, tags, response)
         }, console.log);
     }
@@ -120,7 +118,6 @@ function getPreferences() {
 // FIXME: Edamam API confuses words like 'and' and 'with' when converting the MealDB API objects
 async function convertToEdamamObjects(options, tags, response) {
     locationData = response
-    console.log("inside edmam")
     const foodList = randomRec(options, 3);
     var temp = {}
 
@@ -193,7 +190,7 @@ function convertToArray(dict) {
 
     for(let i = 0; i < Object.keys(dict).length; i++) {
         const key = Object.keys(dict)[i]
-        console.log(dict)
+    
 
 
         temp.push({
@@ -202,15 +199,13 @@ function convertToArray(dict) {
         })
     }
 
-    console.log(temp)
-
+    
     return temp;
 }
 
 function randomRec(categories, numItems) {
     const availItems = []
-    const temp = []
-
+    const temp = []       
     for(var c of categories) {
         for(let i = 0; i < MealDB[c].length; i++) {
             availItems.push(MealDB[c][i].strMeal)

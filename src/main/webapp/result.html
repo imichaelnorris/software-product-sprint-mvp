@@ -8,8 +8,8 @@
     <title>Chosen Food</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
 
-    <script src="https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.js"></script>
-    <link href="https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css" rel="stylesheet" />
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css' rel='stylesheet' />
 
     <style>
         .img-fluid {
@@ -22,45 +22,51 @@
     </style>
 </head>
 
-<body onload="wiki(window.location.search.split('?')[1].split('&')[0].split('=')[1])">
-    <div class="container imageContainer " style="text-align: center ">
-        <img src="./images/image.webp " class="img-fluid " width="80% " alt="... " />
+<body onload="wiki(window.location.search.split('=')[1])">
+    <div class="container imageContainer" style="text-align: center;">
+        <img src="./images/image.webp" class="img-fluid" width="80%" alt="..." />
     </div>
 
-    <div class="container " id="foodhistory "></div>
+    <div class="container" id="foodhistory"></div>
 
-    <div id="map " style="width: 400px; height: 300px "></div>
+    <script src="wikipediaApi.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
-    <script src="wikipediaApi.js "></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js " integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM " crossorigin="anonymous "></script>
+    <div id='map' style='width: 400px; height: 300px;'></div>
+
     <script>
         const lon = window.location.search.split("?")[1].split("&")[2].split("=")[1]
         const lat = window.location.search.split("?")[1].split("&")[1].split("=")[1]
         const food = window.location.search.split("?")[1].split("&")[0].split("=")[1]
         const query = `https://api.edamam.com/api/menu-items/v2/search?app_id=2ba0ec45&app_key=ac665ae3e41a33e09736700ec5a0c738&q=${food}&lat=${lat}&lon=${lon}`
-        let response
-        fetch(query).then(res => res.json()).then(data => {
-            response = data
-        })
-        console.log(response)
-        const selectedPlaces = response['hints'].slice(0, 4)
-        mapboxgl.accessToken =
-            "pk.eyJ1IjoidGRhY2F5YW4iLCJhIjoiY2tyMWY5b2h2MGdwMzJ3cnpjMXBoaXh4ciJ9.ZgutlFxWK6MQx7Mhz7Njfg ";
-        var map = new mapboxgl.Map({
-            container: "map ", // container ID
-            style: "mapbox://styles/mapbox/streets-v11 ", // style URL
-            center: [lon ? lon : 30, lat ? lat : -1.92], // starting position [lng, lat]
-            zoom: 9, // starting zoom
-        });
 
-        selectedFood.forEach(element => {
-            mapboxgl.Marker({
-                    color: "#FFFFFF ",
-                    draggable: true
-                }).setLngLat([element['food']['restaurant']['location']['lon'], element['food']['restaurant']['location']['lat']])
-                .addTo(map);
-        });
+        fetch(query).then(res => res.json()).then(data => {
+            generateMap(data)
+        })
+
+        function generateMap(data) {
+            const selectedPlaces = data['hints'].slice(0, 4)
+
+            mapboxgl.accessToken = 'pk.eyJ1IjoidGRhY2F5YW4iLCJhIjoiY2tyMWY5b2h2MGdwMzJ3cnpjMXBoaXh4ciJ9.ZgutlFxWK6MQx7Mhz7Njfg';
+            var map = new mapboxgl.Map({
+                container: 'map', // container ID
+                style: 'mapbox://styles/mapbox/streets-v11', // style URL
+                center: [lon, lat], // starting position [lng, lat]
+                zoom: 12 // starting zoom
+            });
+
+            return selectedPlaces.map(element => {
+                if (element.food.restaurant.location) {
+                    return new mapboxgl.Marker({
+                            color: "#FFFFFF ",
+                            draggable: true
+                        }).setLngLat([element.food.restaurant.location.lon, element.food.restaurant.location.lat])
+                        .addTo(map);
+                }
+            });
+        }
     </script>
+
 </body>
 
 </html>

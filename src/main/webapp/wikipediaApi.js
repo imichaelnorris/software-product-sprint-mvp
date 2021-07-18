@@ -14,6 +14,8 @@ async function wiki(food) {
         addData(newresponse)
         return
     }
+
+    return "couldn't get an accurate description about the food item selected."
 }
 
 
@@ -47,7 +49,6 @@ async function apiCall(url) {
 }
 
 function addData(data) {
-    console.log(data)
     const element = document.getElementById("foodhistory");
     var node = document.createElement("p");
     node.innerHTML = data;
