@@ -156,7 +156,7 @@ async function convertToEdamamObjects(options, tags) {
 
 // Step 4: Randomly pick 3 food options and display to recommendation cards
 // TODO: Add timer delay to make transition smoother when random item suggestion is clicked again
-function postRecommendations(options, recommendations, lat = "", lon = "") {
+function postRecommendations(options, recommendations, lat = "", long = "") {
     // TODO: Clean up Recommendation loops; too slow
     for (let i = 0; i < recommendations.length; i++) {
         var recMeal = recommendations[i].key;
@@ -176,7 +176,7 @@ function postRecommendations(options, recommendations, lat = "", lon = "") {
 
         $("#rec-card-" + i + " img").attr("src", recMealThumb);
         $("#rec-card-" + i + " div h5").text(recMeal);
-        $("#rec-card-" + i + " a").attr("href", `./result.html?food=${recMeal}&lat=${lat ? lat : ``}&lon=${lon ? lon : ``}`);
+        $("#rec-card-" + i + " a").attr("href", `./result.html?food=${recMeal}${lat ? `&lat=${lat}` : null}${lat ? `&lat=${lat}` : null}`);
     }
 }
 
