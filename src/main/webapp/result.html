@@ -38,7 +38,11 @@
         const lat = window.location.search.split("?")[1].split("&")[1].split("=")[1]
         const food = window.location.search.split("?")[1].split("&")[0].split("=")[1]
         const query = `https://api.edamam.com/api/menu-items/v2/search?app_id=2ba0ec45&app_key=ac665ae3e41a33e09736700ec5a0c738&q=${food}&lat=${lat}&lon=${lon}`
-        const response = await fetch(query).then(res => res.json())
+        let response
+        fetch(query).then(res => res.json()).then(data => {
+            response = data
+        })
+        console.log(response)
         const selectedPlaces = response['hints'].slice(0, 4)
         mapboxgl.accessToken =
             "pk.eyJ1IjoidGRhY2F5YW4iLCJhIjoiY2tyMWY5b2h2MGdwMzJ3cnpjMXBoaXh4ciJ9.ZgutlFxWK6MQx7Mhz7Njfg ";

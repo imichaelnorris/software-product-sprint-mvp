@@ -4,6 +4,8 @@ var MealDB = {};
 // var recommedations needs to be outside
 var recommendations = [];
 
+var locationData;
+
 
 async function initDB() {
     const categories = [
@@ -41,6 +43,7 @@ async function initDB() {
 }
 
 (async() => {
+    console.log('hey')
     MealDB = await initDB();
 })();
 
@@ -78,7 +81,19 @@ function generateRecommendation() {
         .trigger("change");
 
     // Step 3: Convert all foods in array to an Edamam Object
-    MealDB != {} ? convertToEdamamObjects(options, tags) : null;
+
+    getLocation(options, tags)
+}
+
+async function getLocation(options, tags) {
+    console.log("reached location")
+    if (window.navigator.geolocation) {
+        await window.navigator.geolocation.getCurrentPosition((response) => {
+            console.log(response)
+            convertToEdamamObjects(options, tags, response)
+        }, console.log);
+    }
+
 }
 
 function getPreferences() {
@@ -103,14 +118,9 @@ function getPreferences() {
 }
 
 // FIXME: Edamam API confuses words like 'and' and 'with' when converting the MealDB API objects
-async function convertToEdamamObjects(options, tags) {
-    let positionObject;
-
-    if (window.navigator.geolocation) {
-        await window.navigator.geolocation.getCurrentPosition((response) => {
-            positionObject = response
-        }, console.log);
-    }
+async function convertToEdamamObjects(options, tags, response) {
+    locationData = response
+    console.log("inside edmam")
     const foodList = randomRec(options, 3);
     var temp = {}
 
@@ -119,11 +129,11 @@ async function convertToEdamamObjects(options, tags) {
 
         if ("Vegan" in options || "Vegetarian" in options) {
             response = await fetch(
-                `https://api.edamam.com/api/menu-items/v2/search?app_id=2ba0ec45&app_key=ac665ae3e41a33e09736700ec5a0c738&q=${foodName}&lat=${positionObject.coords.latitude}&lon=${positionObject.coords.longitude}&health=vegan&health=vegetarian`
+                `https://api.edamam.com/api/menu-items/v2/search?app_id=2ba0ec45&app_key=ac665ae3e41a33e09736700ec5a0c738&q=${foodName}&lat=${locationData.coords.latitude}&lon=${locationData.coords.longitude}&health=vegan&health=vegetarian`
             );
         } else {
             response = await fetch(
-                `https://api.edamam.com/api/menu-items/v2/search?app_id=2ba0ec45&app_key=ac665ae3e41a33e09736700ec5a0c738&q=${foodName}&lat=${positionObject.coords.latitude}&lon=${positionObject.coords.longitude}${tags}`
+                `https://api.edamam.com/api/menu-items/v2/search?app_id=2ba0ec45&app_key=ac665ae3e41a33e09736700ec5a0c738&q=${foodName}&lat=${locationData.coords.latitude}&lon=${locationData.coords.longitude}${tags}`
             );
         }
         const results = await response.json();
@@ -138,12 +148,12 @@ async function convertToEdamamObjects(options, tags) {
     }
 
     recommendations = convertToArray(temp);
-    if (positionObject) {
+    if (locationData) {
         postRecommendations(
             options,
             recommendations,
-            positionObject.coords.latitude,
-            positionObject.coords.longitude
+            locationData.coords.latitude,
+            locationData.coords.longitude
         );
     } else {
         postRecommendations(options, recommendations);

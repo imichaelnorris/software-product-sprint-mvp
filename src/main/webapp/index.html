@@ -123,7 +123,7 @@
         </div>
 
         <div class="buttonClass">
-            <button type="button" class="btn btn-dark" id="suggest">Suggest Random Food</button>
+            <button type="button" class="btn btn-dark" id="suggest" onclick="generateRecommendation()">Suggest Random Food</button>
             <!-- <a href="#section2" class="btn btn-dark">Suggest Random Food</a> -->
         </div>
 
@@ -195,16 +195,21 @@
         $("#suggest").click(function() {
             var element = document.getElementById("section2");
             let dataStatus = false;
-            while (!dataStatus) {
-                if (document.getElementsByClassName("card-img-top")[0].src != initialImageSource) {
-                    element.classList.remove("hideelement");
-                    $('html,body').animate({
-                            scrollTop: $(".section2").offset().top
-                        },
-                        'slow');
-                    dataStatus = true
-                }
-            }
+            element.classList.remove("hideelement");
+            $('html,body').animate({
+                    scrollTop: $(".section2").offset().top
+                },
+                'slow');
+            // while (!dataStatus) {
+            //     if (document.getElementsByClassName("card-img-top")[0].src != initialImageSource) {
+            //         element.classList.remove("hideelement");
+            //         $('html,body').animate({
+            //                 scrollTop: $(".section2").offset().top
+            //             },
+            //             'slow');
+            //         dataStatus = true
+            //     }
+            // }
 
         });
     </script>
