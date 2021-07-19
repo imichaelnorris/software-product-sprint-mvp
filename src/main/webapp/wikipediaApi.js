@@ -13,7 +13,7 @@ async function wiki(food) {
     let newUrl = generateUrl(food.split('%20')[0])
     let newresponse = await apiCall(newUrl)
     if (newresponse && newresponse.substr(0, 3) != '<!--' &&
-        response.search('limit') == -1) {
+        newresponse.search('limit') == -1) {
         console.log('hello')
         addData(newresponse)
         return
