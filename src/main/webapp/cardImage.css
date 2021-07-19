@@ -2,6 +2,30 @@
     color: white;
 }
 
+.clickable {
+    align-items: center;
+    overflow: hidden;
+}
+
+.clickable .card-body {
+    height: inherit;
+    width: inherit;
+    transition: transform .5s ease;
+}
+.clickable .card-body:hover {
+    transform: scale(1.1);
+}
+
+.clickable:hover {
+    filter: brightness(85%);
+}
+
+.selected { 
+    filter: brightness(70%);
+    border: 3px solid rgb(120, 120, 253) !important;
+}
+
+
 #breakfastOpt {
     background: linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05)), url("./images/card-bg/breakfast-bg.jpeg");
     background-position: center;
