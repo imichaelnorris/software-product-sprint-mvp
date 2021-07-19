@@ -12,12 +12,16 @@
     width: inherit;
     transition: transform .5s ease;
 }
-.clickable .card-body:hover {
+.clickable:not(.disabled) .card-body:hover {
     transform: scale(1.1);
 }
 
-.clickable:hover {
+.clickable:not(.disabled):hover {
     filter: brightness(85%);
+}
+
+.disabled {
+    filter: brightness(50%);
 }
 
 .selected { 
@@ -86,7 +90,7 @@
     background-size: cover;
 }
 
-#veggieOpt {
+#vegetarianOpt {
     background: linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05)), url("./images/card-bg/veggie-bg.jpg");
     background-position: center;
     background-size: cover;
