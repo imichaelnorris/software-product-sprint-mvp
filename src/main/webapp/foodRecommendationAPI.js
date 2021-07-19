@@ -62,9 +62,7 @@ function genRecommendationUpdate() {
         console.log(tags)
     })
     
-    console.log("this gets done first")
     getLocation(options, tags)
-    
 }
 
 async function getLocation(options, tags) {
@@ -163,7 +161,7 @@ function postRecommendations(options, recommendations, lat = "", lon = "") {
         }
 
         $("#rec-card-" + i + " img").attr("src", recMealThumb);
-        $("#rec-card-" + i + " div h5").text(recMeal);
+        $("#rec-card-" + i + " div h4").text(recMeal);
         $("#rec-card-" + i + " a").attr("href", `./result.html?food=${recMeal}&lat=${lat ? lat : ``}&lon=${lon ? lon : ``}&img=${recMealThumb}`);
     }
 }
