@@ -10,21 +10,24 @@
 
     <script src='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.js'></script>
     <link href='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css' rel='stylesheet' />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <style>
         .img-fluid {
-            height: 450px !important;
+            width: 100%;
+            height: auto;
         }
         
         .imageContainer {
             margin-top: 4em;
+            width: 450px !important
         }
     </style>
 </head>
 
-<body onload="wiki(window.location.search.split('=')[1])">
-    <div class="container imageContainer" style="text-align: center;">
-        <img src="./images/image.webp" class="img-fluid" width="80%" alt="..." />
+<body onload="wiki(window.location.search.split('=')[1]); updateImage();">
+    <div class="container imageContainer" id="imageContainer" style="text-align: center;">
+        <img src="./images/foodServe.PNG" class="img-fluid" width="80%" alt="..." />
     </div>
 
     <div class="container" id="foodhistory"></div>
@@ -43,6 +46,11 @@
         fetch(query).then(res => res.json()).then(data => {
             generateMap(data)
         })
+
+        function updateImage() {
+            console.log(window.location.search.split("?")[1].split("&")[3].split("=")[1])
+            $("#imageContainer" + " img").attr("src", window.location.search.split("?")[1].split("&")[3].split("=")[1]);
+        }
 
         function generateMap(data) {
             const selectedPlaces = data['hints'].slice(0, 4)

@@ -181,7 +181,7 @@ function postRecommendations(options, recommendations, lat = "", lon = "") {
 
         $("#rec-card-" + i + " img").attr("src", recMealThumb);
         $("#rec-card-" + i + " div h5").text(recMeal);
-        $("#rec-card-" + i + " a").attr("href", `./result.html?food=${recMeal}&lat=${lat ? lat : ``}&lon=${lon ? lon : ``}`);
+        $("#rec-card-" + i + " a").attr("href", `./result.html?food=${recMeal}&lat=${lat ? lat : ``}&lon=${lon ? lon : ``}&img=${recMealThumb}`);
     }
 }
 

@@ -2,7 +2,9 @@ async function wiki(food) {
     //try getting wiki data with exactly the name passed
     let url = generateUrl(food)
     let response = await apiCall(url)
-    if (response && response.substr(0, 3) != '<!--') {
+    if (response && response.substr(0, 3) != '<!--' &&
+        response.search('limit') == -1) {
+        console.log('hi')
         addData(response)
         return
     }
@@ -10,12 +12,14 @@ async function wiki(food) {
     // get wiki value using the first element before space character
     let newUrl = generateUrl(food.split('%20')[0])
     let newresponse = await apiCall(newUrl)
-    if (newresponse && newresponse.substr(0, 3) != '<!--') {
+    if (newresponse && newresponse.substr(0, 3) != '<!--' &&
+        response.search('limit') == -1) {
+        console.log('hello')
         addData(newresponse)
         return
     }
 
-    return "couldn't get an accurate description about the food item selected."
+    addData("couldn't get an accurate description about the food item selected.")
 }
 
 
@@ -29,8 +33,16 @@ function removeUnwantedNode() {
             }
         }
     }
-    target = document.getElementsByTagName("p")[-1];
-    target.parentNode.removeChild(p)
+    var paragraph = document.getElementsByTagName("p");
+    console.log(paragraph)
+    if (paragraph.length > 0) {
+        if (document.getElementsByTagName("p")[-1]) {
+            target = document.getElementsByTagName("p")[-1];
+            target.parentNode.removeChild(p)
+        }
+
+    }
+
 }
 
 
@@ -43,6 +55,7 @@ async function apiCall(url) {
     await fetch(url)
         .then((response) => response.json())
         .then((data) => {
+            console.log(data)
             returnValue = data.query.pages[Object.keys(data.query.pages)[0]].extract
         });
     if (returnValue) { return returnValue }
