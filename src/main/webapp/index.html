@@ -13,20 +13,16 @@
     <script src="foodRecommendationAPI.js"></script>
 
     <style>
-        div {
+        /* div {
             border: 1px solid black;
-        }
+        } */
         /* .hidden {
             display: none;
         } */
-        .hidden-new {
+        #div2, #div3 {
             display: none;
         }
 
-        #buttons {
-            position: absolute;
-            bottom: 10px
-        }
     </style> 
 </head>
 
@@ -43,7 +39,7 @@
 <!-- -------------------------------------------------------------------------------------------------- -->
     
         <!-- Test Area for UI Update -->
-        <div class="container-fluid hidden-new" id="div1">
+        <div class="container-fluid hidden" id="div1">
             <div class="row" style="height: inherit !important;">
                 <div class="col-1 side-label">
                     <h1>M<br>E<br>A<br>L</h1>
@@ -80,7 +76,7 @@
             </div>
         </div>
 <!-- -------------------------------------------------------------------------------------------------- -->
-        <div class="container-fluid hidden-new" id="div2">
+        <div class="container-fluid hidden" id="div2">
             <div class="row justify-content-end">
                 <div class="col-1 backToOne"></div>
                 <div class="col-1 side-label">
@@ -142,7 +138,7 @@
                                 </div>
                             </div>
                             <div class="pref other card clickable">
-                                <div class="card-body" id="veggieOpt">
+                                <div class="card-body" id="vegetarianOpt">
                                     <h5 class="card-title">Vegetarian</h5>
                                     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                                 </div>
@@ -167,7 +163,7 @@
             </div>
         </div>
 <!-- -------------------------------------------------------------------------------------------------- -->
-        <div class="container-fluid hidden-new" id="div3">
+        <div class="container-fluid hidden" id="div3">
             <div class="row" style="height: inherit !important;">
                 <div class="col-1 backToOne"></div>
                 <div class="col-1 backToTwo"></div>
@@ -180,8 +176,8 @@
                     <div class="overflow-wrap">
                         <div class="row justify-content-center">
                             <div class="alg card clickable">
-                                <div class="card-body">
-                                    <h5 class="card-title">Card title</h5>
+                                <div class="card-body" id="peanutAlrgy">
+                                    <h5 class="card-title">peanuta allergy</h5>
                                     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                                 </div>
                             </div>
@@ -243,20 +239,13 @@
                         <button type="button" class="btn btn-dark" onclick="hideElement('div3')">
                             Back
                         </button>
-                        <button type="button" class="btn btn-dark" onclick="showElement('div3')">
+                        <button type="button" class="btn btn-dark" id="suggest" onclick="foodFunctionCaller()">
                             Next
                         </button>
                     </div>
                 </div>
             </div>
         </div>
-<!-- -------------------------------------------------------------------------------------------------- -->
-        <div class="justify-content-center hidden-new" id="buttons">
-            <button name="toggle-div1"> Hide Div 1</button> 
-            <button name="toggle-div2"> Hide Div 2</button>
-            <button name="toggle-div3"> Hide Div 3</button>
-            <button name="switch"> Toggle both</button> 
-        </div> 
 <!-- -------------------------------------------------------------------------------------------------- -->
         <script> 
             $(document).ready(
@@ -280,8 +269,27 @@
                     var isVisible = $("#" + id).css('display') == "none" ? showElement(id) : hideElement(id);
             }
             
-            function showElement(id) { $("#" + id).show(); }
-            function hideElement(id) { $("#" + id).hide(); }
+            function showElement(id) { 
+                $("#" + id).show(); 
+            }
+
+            function hideElement(id) { 
+                $("#" + id).hide(); 
+            }
+
+            function disableOptions(...arr) {
+                for(var e of arr) {
+                    $("#" + e + "Opt").parent().addClass("disabled");
+                    console.log(e + "Opt was disabled")
+                }
+            }
+
+            function enableOptions(...arr) {
+                for(var e of arr) {
+                    $("#" + e + "Opt").parent().removeClass("disabled");
+                    console.log(e + "Opt was enabled")
+                }
+            } 
 
             $(".backToOne").click(function () {
                 hideElement("div2")
@@ -295,102 +303,34 @@
             $(".clickable").click(function(e) {
                 if($(this).hasClass("selected")) {
                     $(this).removeClass("selected")
+                    checkOptions()
                     currentItem = null;
                 } else {
-                    currentItem = $(this).addClass("selected");
+                    if($(this).hasClass("disabled"))
+                        console.log()
+                    else {  
+                        currentItem = $(this).addClass("selected");
+                        checkOptions()
+                    }                    
                 }
                 e.stopPropagation();
             });
 
+            function checkOptions() {
+                if($("#breakfastOpt").parent().hasClass("selected")) {
+                    disableOptions("lunchDinner")
+                }
+                else {
+                    enableOptions("lunchDinner")
+                }
+                if($("#lunchDinnerOpt").parent().hasClass("selected")) {
+                    disableOptions("breakfast")
+                }
+                else {
+                    enableOptions("breakfast")
+                }
+            }
         </script>
-
-
-
-
-
-
-
-
-
-
-
-
-        <div class="options hidden">
-            <!-- Checkbox for meal type -->
-            <div class="meal-type hidden">
-                <h4 class="categoryTitle" style="color: white;">Meal Type</h4>
-                <div class="formelements">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="breakfast" id="breakfastMeal">
-                        <label class="form-check-label" for="breakfastMeal">
-                            Breakfast
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input not-breakfast" type="checkbox" value="" id="lunchDinnerMeal">
-                        <label class="form-check-label" for="lunchDinnerMeal">
-                            Lunch/Dinner
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input not-breakfast" type="checkbox" value="" id="dessertMeal">
-                        <label class="form-check-label" for="dessertMeal">
-                            Dessert
-                        </label>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Checkbox for Preferences -->
-            <div class="categories hidden">
-                <h4 class="categoryTitle" style="color: white;">Categories</h4>
-                <div class="formelements">
-                    <div class="form-check">
-                        <input class="form-check-input preference" type="checkbox" value="" id="prefMeat">
-                        <label class="form-check-label" for="prefMeat">
-                            Meat
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input preference" type="checkbox" value="" id="prefSeafood">
-                        <label class="form-check-label" for="prefSeafood">
-                            Seafood
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input preference" type="checkbox" value="" id="prefPasta">
-                        <label class="form-check-label" for="prefPasta">
-                            Pasta
-                        </label>
-                    </div>
-                    <!-- TODO: Create an extra rec-card for the vegan/vegetarian option if another box is checked -->
-                    <div class="form-check">
-                        <input class="form-check-input preference" type="checkbox" value="" id="prefVeggie">
-                        <label class="form-check-label" for="prefVeggie">
-                            Vegetarian/Vegan
-                        </label>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Checkbox for Allergies -->
-            <!-- Check for reference: https://www.codexworld.com/multi-select-dropdown-list-with-checkbox-jquery/ -->
-            <!-- TODO: Change multi-select box to multi-select with checkboxes -->
-            <div class="allergies hidden">
-                <h4 class="categoryTitle" style="color: white;">Other</h4>
-                <select name="allergy-select" multiple="multi-select-dropdown-list-with-checkbox-jquery" id="allergy-select">
-                    <option value="alcohol-free">Alcohol-Free</option>
-                    <option value="egg-free">Egg-Free</option>
-                    <option value="fish-free">Fish-Free</option>
-                    <option value="shellfish-free">Shellfish-Free</option>
-                    <option value="gluten-free">Gluten-free</option>
-                    <option value="peanut-free">Peanut-Free</option>
-                    <option value="soy-free">Soy-free</option>
-                    <option value="tree-nut-free">Tree-Nut-Free</option>
-                    <option value="wheat-free">Wheat-Free</option>
-                </select>
-            </div>
-        </div>
 
         <div class="buttonClass">
             <button type="button" class="btn btn-dark" id="suggest" onclick="foodFunctionCaller()">Suggest Random Food</button>
@@ -398,10 +338,9 @@
         </div>
     </div>
 
-    <div class="justify-content-center" id="loading"> 
-        <div id="loading">
-            <img id="loading-image" src="./images/spinner.gif" alt="Loading..." />
-        </div>
+    
+    <div id="loading">
+        <img id="loading-image" src="./images/spinner.gif" alt="Loading..." />
     </div>
 
     <!-- TODO: add section for user location -->
@@ -446,7 +385,7 @@
 
         function foodFunctionCaller() {
             setTimeout(function() {
-                generateRecommendation()
+                genRecommendationUpdate()
                 showRecommendations()
             }, 7000);
         }
