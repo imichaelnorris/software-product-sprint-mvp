@@ -3,23 +3,22 @@ var MealDB = {};
 
 // var recommedations needs to be outside
 var recommendations = [];
-
+var options = []
 var locationData;
 
 async function initDB() {
     const categories = [
-        "Beef",
-        "Chicken",
-        "Goat",
-        "Lamb",
-        "Pasta",
-        "Pork",
-        "Seafood",
-        "Vegetarian",
-        "Dessert",
-        "Breakfast",
-        "Miscellaneous",
-        "Vegan",
+        "beef",
+        "chicken",
+        "goat",
+        "lamb",
+        "pasta",
+        "pork",
+        "seafood",
+        "vegetarian",
+        "dessert",
+        "breakfast",
+        "vegan",
     ];
     const temp = {};
 
@@ -45,43 +44,27 @@ async function initDB() {
     MealDB = await initDB();
 })();
 
-
-function generateRecommendation() {
-    var options = [];
+function genRecommendationUpdate() {
+    options = []
     var tags = "";
-    var temp = [];
     var list = {};
 
-    // Step 1: Get Meal Type and store chosen categories in an array
-    if (document.getElementById("breakfastMeal").checked) {
-        temp.push("Breakfast");
-    }
-    if (document.getElementById("lunchDinnerMeal").checked) {
-        temp.push(getPreferences());
-    }
-    if (document.getElementById("dessertMeal").checked) {
-        temp.push("Dessert");
-    }
+    $(".selected:not('.alg')").each(function() { 
+        var option = $(this).children().attr('id').replace('Opt','')
+        console.log(option)
+        if(option !== 'lunchDinner')
+            options.push(option)
+    })
 
-    // Creates a 1D array
-    for (let i = 0; i < temp.length; i++) {
-        options = options.concat(temp[i]);
-    }
-
-
-    // Step 2: Get Allergies and Filter out the allergies
-    $("#allergy-select")
-        .change(function() {
-            tags = "";
-            $("select option:selected").each(function() {
-                tags += "&health=" + $(this).val();
-            });
-        })
-        .trigger("change");
-
-    // Step 3: Convert all foods in array to an Edamam Object
-
+    $(".selected.alg").each(function() { 
+        var allergy = $(this).children().attr('id').replace('Alrgy','-free')
+        tags += "&health=" + allergy;
+        console.log(tags)
+    })
+    
+    console.log("this gets done first")
     getLocation(options, tags)
+    
 }
 
 async function getLocation(options, tags) {
@@ -119,6 +102,7 @@ async function convertToEdamamObjects(options, tags, response) {
     locationData = response
     const foodList = randomRec(options, 3);
     var temp = {}
+    console.log("in convertToEdamamObjects")
 
     for (var foodName of foodList) {
         var response = null;
@@ -208,6 +192,7 @@ function randomRec(categories, numItems) {
     for(var c of categories) {
         for(let i = 0; i < MealDB[c].length; i++) {
             availItems.push(MealDB[c][i].strMeal)
+            console.log(availItems)
         }
     }
 
@@ -216,6 +201,8 @@ function randomRec(categories, numItems) {
         temp.push(availItems[index])
         availItems.splice(index, 1)
     }
+
+    console.log(temp)
 
     return temp;
 }
