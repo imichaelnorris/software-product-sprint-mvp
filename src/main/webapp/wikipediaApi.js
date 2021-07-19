@@ -4,7 +4,6 @@ async function wiki(food) {
     let response = await apiCall(url)
     if (response && response.substr(0, 3) != '<!--' &&
         response.search('limit') == -1) {
-        console.log('hi')
         addData(response)
         return
     }
@@ -14,7 +13,6 @@ async function wiki(food) {
     let newresponse = await apiCall(newUrl)
     if (newresponse && newresponse.substr(0, 3) != '<!--' &&
         newresponse.search('limit') == -1) {
-        console.log('hello')
         addData(newresponse)
         return
     }
@@ -34,7 +32,6 @@ function removeUnwantedNode() {
         }
     }
     var paragraph = document.getElementsByTagName("p");
-    console.log(paragraph)
     if (paragraph.length > 0) {
         if (document.getElementsByTagName("p")[-1]) {
             target = document.getElementsByTagName("p")[-1];
@@ -55,7 +52,6 @@ async function apiCall(url) {
     await fetch(url)
         .then((response) => response.json())
         .then((data) => {
-            console.log(data)
             returnValue = data.query.pages[Object.keys(data.query.pages)[0]].extract
         });
     if (returnValue) { return returnValue }
