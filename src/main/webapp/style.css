@@ -88,6 +88,7 @@ label.form-check-label {
 
 
 .secondsection {
+    background-color: rgba(245,245,245);
     display: flex;
     justify-content: center;
 }
@@ -105,6 +106,7 @@ label.form-check-label {
 }
 
 #loading {
+    background-color: rgba(245,245,245);
     padding-top: 15em;
     height: 40em;
 }

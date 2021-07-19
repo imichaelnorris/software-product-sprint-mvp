@@ -10,6 +10,10 @@
     padding: 45% 10% !important;
 }
 
+.rec.foodcards .card{
+    margin: 1em 2em;
+}
+
 .clickable {
     align-items: center;
     overflow: hidden;
