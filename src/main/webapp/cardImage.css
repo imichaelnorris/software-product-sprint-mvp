@@ -1,5 +1,13 @@
-.meal.card, .pref.card {
+.meal.card, .pref.card, .alg.card {
     color: white;
+}
+
+.meal.card .card-body {
+    padding: 65% 10% !important;
+}
+
+.pref.card .card-body {
+    padding: 45% 10% !important;
 }
 
 .clickable {
@@ -22,6 +30,7 @@
 
 .disabled {
     filter: brightness(50%);
+    border: 3px solid rgb(243, 63, 63) !important;
 }
 
 .selected { 
@@ -98,6 +107,53 @@
 
 #veganOpt {
     background: linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05)), url("./images/card-bg/vegan-bg.png");
+    background-position: center;
+    background-size: cover;
+}
+
+/* Allergies */
+#alcoholAlrgy {
+    background: linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05)), url("./images/card-bg/alcohol.jpg");
+    background-position: center;
+    background-size: cover;
+}
+#eggAlrgy {
+    background: linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05)), url("./images/card-bg/egg.jfif");
+    background-position: center;
+    background-size: cover;
+}
+#fishAlrgy {
+    background: linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05)), url("./images/card-bg/fish.jpg");
+    background-position: center;
+    background-size: cover;
+}
+#glutenAlrgy {
+    background: linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05)), url("./images/card-bg/gluten.jpg");
+    background-position: center;
+    background-size: cover;
+}
+#peanutAlrgy {
+    background: linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05)), url("./images/card-bg/peanut.jpg");
+    background-position: center;
+    background-size: cover;
+}
+#shellfishAlrgy {
+    background: linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05)), url("./images/card-bg/shellfish.jpg");
+    background-position: center;
+    background-size: cover;
+}
+#soyAlrgy {
+    background: linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05)), url("./images/card-bg/soy.jpg");
+    background-position: center;
+    background-size: cover;
+}
+#tree-nutAlrgy {
+    background: linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05)), url("./images/card-bg/tree-nut.jpg");
+    background-position: center;
+    background-size: cover;
+}
+#wheatAlrgy {
+    background: linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05)), url("./images/card-bg/wheat.jpg");
     background-position: center;
     background-size: cover;
 }
