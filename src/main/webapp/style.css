@@ -86,6 +86,7 @@ label.form-check-label {
     margin-left: 1.5em;
 }
 
+
 .secondsection {
     display: flex;
     justify-content: center;
@@ -147,6 +148,7 @@ label.form-check-label {
 }
 
 .card-body {
+    text-align: center;
     padding: 35% 10% !important;
 }
 
