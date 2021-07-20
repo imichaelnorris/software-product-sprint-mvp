@@ -25,7 +25,7 @@
     </style>
 </head>
 
-<body onload="wiki(window.location.search.split('=')[1]); updateImage();">
+<body onload="wiki(window.location.search.split('?')[1].split('&')[0].split('=')[1]); updateImage();">
     <div class="container imageContainer" id="imageContainer" style="text-align: center;">
         <img src="./images/foodServe.PNG" class="img-fluid" width="80%" alt="..." />
     </div>
@@ -38,17 +38,22 @@
     <div id='map' style='width: 400px; height: 300px;'></div>
 
     <script>
-        const lon = window.location.search.split("?")[1].split("&")[2].split("=")[1]
-        const lat = window.location.search.split("?")[1].split("&")[1].split("=")[1]
+        const lon = window.location.search.split("?")[1].split("&")[3].split("=")[1]
+        const lat = window.location.search.split("?")[1].split("&")[2].split("=")[1]
+        const tags = window.location.search.split("?")[1].split("&")[1].split("tags=")[1].replaceAll('+','&')
         const food = window.location.search.split("?")[1].split("&")[0].split("=")[1]
-        const query = `https://api.edamam.com/api/menu-items/v2/search?app_id=2ba0ec45&app_key=ac665ae3e41a33e09736700ec5a0c738&q=${food}&lat=${lat}&lon=${lon}`
+
+        console.log(tags)
+
+        const query = `https://api.edamam.com/api/menu-items/v2/search?app_id=2ba0ec45&app_key=ac665ae3e41a33e09736700ec5a0c738&q=${food}&lat=${lat}&lon=${lon}${tags}`
+        console.log(query)
 
         fetch(query).then(res => res.json()).then(data => {
             generateMap(data)
         })
 
         function updateImage() {
-            $("#imageContainer" + " img").attr("src", window.location.search.split("?")[1].split("&")[3].split("=")[1]);
+            $("#imageContainer" + " img").attr("src", window.location.search.split("?")[1].split("&")[4].split("=")[1]);
         }
 
         function generateMap(data) {
