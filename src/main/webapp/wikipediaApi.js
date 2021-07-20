@@ -3,7 +3,7 @@ async function wiki(food) {
     let url = generateUrl(food)
     let response = await apiCall(url)
     if (response && response.substr(0, 3) != '<!--' &&
-        response.search('limit') == -1) {
+        response.search('limit') == -1 && !newresponse.includes('may refer to')) {
         addData(response)
         return
     }
@@ -12,7 +12,7 @@ async function wiki(food) {
     let newUrl = generateUrl(food.split('%20')[0])
     let newresponse = await apiCall(newUrl)
     if (newresponse && newresponse.substr(0, 3) != '<!--' &&
-        newresponse.search('limit') == -1) {
+        newresponse.search('limit') == -1 && !newresponse.includes('may refer to')) {
         addData(newresponse)
         return
     }
