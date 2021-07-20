@@ -57,7 +57,7 @@ function genRecommendationUpdate() {
 
     $(".selected.alg").each(function() { 
         var allergy = $(this).children().attr('id').replace('Alrgy','-free')
-        tags += "&health=" + allergy;
+        tags += "+health=" + allergy;
     })
     
     getLocation(options, tags)
@@ -96,53 +96,31 @@ function getPreferences() {
 // FIXME: Edamam API confuses words like 'and' and 'with' when converting the MealDB API objects
 async function convertToEdamamObjects(options, tags, response) {
     locationData = response
-    const foodList = randomRec(options, 3);
-    var temp = {}
 
-    for (var foodName of foodList) {
-        var response = null;
 
-        if ("Vegan" in options || "Vegetarian" in options) {
-            response = await fetch(
-                `https://api.edamam.com/api/menu-items/v2/search?app_id=2ba0ec45&app_key=ac665ae3e41a33e09736700ec5a0c738&q=${foodName}&lat=${locationData.coords.latitude}&lon=${locationData.coords.longitude}&health=vegan&health=vegetarian`
-            );
-        } else {
-            response = await fetch(
-                `https://api.edamam.com/api/menu-items/v2/search?app_id=2ba0ec45&app_key=ac665ae3e41a33e09736700ec5a0c738&q=${foodName}&lat=${locationData.coords.latitude}&lon=${locationData.coords.longitude}${tags}`
-            );
-        }
-        const results = await response.json();
+    recommendations = randomRec(options, 3);
 
-        for (let i = 0; i < results.hints.length; i++) {
-            if (!temp[foodName]) {
-                temp[foodName] = [results.hints[i]]
-            } else {
-                temp[foodName].push(results.hints[i])
-            }
-        }
-    }
-
-    recommendations = convertToArray(temp);
     if (locationData) {
         postRecommendations(
             options,
             recommendations,
+            tags,
             locationData.coords.latitude,
             locationData.coords.longitude
         );
     } else {
-        postRecommendations(options, recommendations);
+        postRecommendations(options, recommendations, tags);
     }
 
 }
 
 // Step 4: Randomly pick 3 food options and display to recommendation cards
 // TODO: Add timer delay to make transition smoother when random item suggestion is clicked again
-function postRecommendations(options, recommendations, lat = "", lon = "") {
+function postRecommendations(options, recommendations, tags, lat = "", lon = "") {
 
     // TODO: Clean up Recommendation loops; too slow
     for (let i = 0; i < recommendations.length; i++) {
-        var recMeal = recommendations[i].key;
+        var recMeal = recommendations[i];
         var recMealThumb = "";
         var isFound = false;
 
@@ -157,9 +135,11 @@ function postRecommendations(options, recommendations, lat = "", lon = "") {
             if (isFound === true) break;
         }
 
+        recMeal = recMeal.replace("&", "and")
+
         $("#rec-card-" + i + " img").attr("src", recMealThumb);
         $("#rec-card-" + i + " div h4").text(recMeal);
-        $("#rec-card-" + i + " a").attr("href", `./result.html?food=${recMeal}&lat=${lat ? lat : ``}&lon=${lon ? lon : ``}&img=${recMealThumb}`);
+        $("#rec-card-" + i + " a").attr("href", `./result.html?food=${recMeal}&tags=${tags}&lat=${lat ? lat : ``}&lon=${lon ? lon : ``}&img=${recMealThumb}`);
     }
 }
 
