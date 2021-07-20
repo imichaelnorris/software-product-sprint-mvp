@@ -27,11 +27,10 @@ async function wiki(food) {
     let response = await apiCall(url)
     console.log(response)
     if (response && response.substr(0, 3) != '<!--' &&
-        response.search('limit') == -1) {
+        response.search('limit') == -1 && !newresponse.includes('may refer to')) {
         addData(response)
         return
     }
-
 
     let foodItems = removeItemAll(food.split('%20'), "and", "the", "with")
     console.log(foodItems)
@@ -47,7 +46,7 @@ async function wiki(food) {
         console.log(newresponse)
 
         if (newresponse && newresponse.substr(0, 3) != '<!--' &&
-            newresponse.search('limit') == -1) {
+            newresponse.search('limit') == -1 && !newresponse.includes('may refer to')) {
             addData(newresponse)
         }
     }
