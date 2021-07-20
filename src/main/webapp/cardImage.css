@@ -34,12 +34,12 @@
 
 .disabled {
     filter: brightness(50%);
-    border: 3px solid rgb(243, 63, 63) !important;
+    border: 7px solid rgb(243, 63, 63) !important;
 }
 
 .selected { 
     filter: brightness(70%);
-    border: 3px solid rgb(120, 120, 253) !important;
+    border: 7px solid rgb(120, 120, 253) !important;
 }
 
 
