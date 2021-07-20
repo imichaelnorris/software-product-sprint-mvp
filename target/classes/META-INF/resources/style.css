@@ -88,6 +88,7 @@ label.form-check-label {
 
 .logoimage {
     margin-left: 1.5em;
+    margin-bottom: 1em;
 }
 
 .secondsection {
@@ -103,6 +104,7 @@ label.form-check-label {
 #div1,
 #div2,
 #div3 {
+    z-index: 0;
     position: absolute;
     overflow: hidden !important;
     height: 48em !important;
@@ -226,4 +228,50 @@ label.form-check-label {
     margin-bottom: 0.75em;
     padding: 0;
     height: 85%;
+}
+
+.img-fluid {
+    width: 100%;
+    height: auto;
+}
+
+.imageContainer {
+    position: relative;
+    background-color: white;
+    text-align: center;
+    padding: 1em;            
+    margin: 0 auto 4em;
+    border: 2px solid black;
+    border-radius: 0.5em;
+    height: fit-content;
+    max-height: 35em;
+    width: 450px !important
+}
+
+#map {
+    border: 1px solid black;
+    border-radius: 1em;
+}
+
+.mapclass {
+    display: flex;
+    padding: 2em;
+}
+
+.mapinfo {
+    width: fit-content;
+}
+.foodinfo {
+    display: flex;
+    justify-content: space-around;
+    padding: 3em;
+}
+.foodinfo div {
+    margin: 1em;
+}
+
+#foodhistory {
+    height: 25em;
+    max-width: fit-content;
+    overflow-y: auto;
 }

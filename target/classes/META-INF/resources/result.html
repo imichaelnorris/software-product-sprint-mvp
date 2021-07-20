@@ -16,144 +16,199 @@
     <script src="generalFunctions.js"></script>
 
     <style>
-        div  {
+        /* div  {
             border: 1px solid black;
-        }
-        
-        .img-fluid {
-            width: 100%;
-            height: auto;
-        }
-        
-        .imageContainer {
-            margin-top: 4em;
-            width: 450px !important
-        }
-        
-        .mapclass {
-            display: flex;
-        }
-        
-        .mapinfo {
-            width: fit-content;
-        }
+        } */
     </style>
 </head>
 
-<body class="overflow-y-hidden" onload="pageInit()">
-    <style> 
-        #foodhistory {
-            height: 39em;
-            overflow-y: auto;
-        }    
-    </style>
-    <!-- Loading page -->
-    <div id="loading">
-        <header></header> 
-        <img id="loading-image" src="./images/loading.gif" alt="Loading..." />
-        <footer></footer>
-    </div>
-
-    <!-- Header -->
-    <div class="logo" id="logo">
-        <img src="./images/myfoodie.png" class="logoimage" />
-        <div class="logotitle">
-            <h4 style="color: white; font-family: Georgia, 'Times New Roman', Times, serif;">MyFoodie</h4>
-        </div>
-    </div>
-    <div>
-        <div class="container imageContainer" id="imageContainer" style="text-align: center;">
-            <img src="./images/foodServe.PNG" class="img-fluid" width="80%" alt="..." />
+<body class="overflow-y-hidden" onload="pageInit()" style="overflow-x: hidden;">
+    
+    <div class="bg section1" id="section1" style="position: relative;">
+        <!-- Loading page -->
+        <div id="loading">
+            <header></header> 
+            <img id="loading-image" src="./images/loading.gif" alt="Loading..." />
+            <footer></footer>
         </div>
 
-        <div class="container" id="foodhistory"></div>
+        <!-- Header -->
+        <div class="logo" id="logo" onclick="window.location.href='/'">
+            <img src="./images/myfoodie.png" class="logoimage" />
+            <div class="logotitle">
+                <h4 style="color: white; font-family: Georgia, 'Times New Roman', Times, serif;">MyFoodie</h4>
+            </div>
+        </div>
+        
+        <div class="row justify-content-center" style="padding: 3em;">
+            <div class="row" style="height: 50em; text-align: center;">
+                <h1 style="color:white; font-family: Georgia;"><b>Surprise! You chose</b></h1>
+                <div class="container imageContainer" id="imageContainer" style="">
+                    <img src="./images/foodServe.PNG" class="img-fluid" width="80%" alt="..." />
+                    <p id='foodname'></p>
+                </div>
+            </div>
 
+            <div class="row">
+                <div class="foodinfo">
+                    <div class="col-4" id="ingdContainer">
+                        <h3>Ingredients</h3>
+                        <div class="ingredients">
+                            <ul id="ingredientslist"></ul>
+                        </div>
+                    </div>
+                    <div class="col-6 justify-content-center">
+                        <h3>Food Info</h3>
+                        <div class="container" id="foodhistory">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row justify-content-center" style="text-align: center;">
+                <h3>Locations</h3>
+                <div class="mapclass justify-content-center">
+                    <div id='map' style='width: 400px; height: 300px;'></div>
+                    <div id='mapinfo' class="mapinfo">
+                        <ul id="myList"></ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>    
+        
         <script src="wikipediaApi.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+        <script>
+            function pageInit() {
+                var foodName = window.location.search.split('?')[1].split('&')[0].split('=')[1]
+                wiki(foodName).then(function() {
+                    updateImage();
+                    addFoodName();
+                    $("body").removeClass("overflow-y-hidden")
+                    hideElement('loading', 400);
 
-        <div id='map' style='width: 400px; height: 300px;'></div>
-    </div>    
-    
+                    if ($('#ingredientslist').length === 0 ) {
+                        hideElement("ingdContainer")
+                    }
+                })
 
-    <script>
-        function pageInit() {
-            var foodName = window.location.search.split('?')[1].split('&')[0].split('=')[1]
-            wiki(foodName).then(function() {
-                updateImage();
-                $("body").removeClass("overflow-y-hidden")
-                hideElement('loading', 400);
+                $(window).bind('scroll', function() {
+                    if ($(window).scrollTop() > 100) {
+                        $('#myDivId').hide();
+                    }
+                    else {
+                        $('#myDivId').show();
+                    }
+                });
+            }
+        </script> 
+
+        <script>
+            const lon = window.location.search.split("?")[1].split("&")[3].split("=")[1]
+            const lat = window.location.search.split("?")[1].split("&")[2].split("=")[1]
+            const tags = window.location.search.split("?")[1].split("&")[1].split("tags=")[1].replaceAll('+','&')
+            const food = window.location.search.split("?")[1].split("&")[0].split("=")[1]
+
+            const foodquery = `https://api.edamam.com/api/menu-items/v2/search?app_id=2ba0ec45&app_key=ac665ae3e41a33e09736700ec5a0c738&q=${food}&lat=${lat}&lon=${lon}${tags}`
+            const ingredientsquery = `https://api.edamam.com/api/recipes/v2?type=public&q=${food}&app_id=f000a577&app_key=c1001bda7a1c8a365f96750f7f9b562f`
+            
+            fetch(ingredientsquery).then(res => res.json()).then(data => {
+                outPutIngredients(data)
             })
-                        
-        }
-    </script> 
+            fetch(foodquery).then(res => res.json()).then(data => {
+                generateMap(data)
+            })
 
+            function updateImage() {
+                $("#imageContainer" + " img").attr("src", window.location.search.split("?")[1].split("&")[4].split("=")[1]);
+            }
 
+            function generateMap(data) {
+                const selectedPlaces = data['hints'].slice(0, 4)
+                mapboxgl.accessToken = 'pk.eyJ1IjoidGRhY2F5YW4iLCJhIjoiY2tyMWY5b2h2MGdwMzJ3cnpjMXBoaXh4ciJ9.ZgutlFxWK6MQx7Mhz7Njfg';
+                var map = new mapboxgl.Map({
+                    container: 'map', // container ID
+                    style: 'mapbox://styles/mapbox/streets-v11', // style URL
+                    center: [lon, lat], // starting position [lng, lat]
+                    zoom: 8 // starting zoom
+                });
+                new mapboxgl.Marker({
+                        color: "red",
+                    }).setLngLat([lon, lat])
+                    .addTo(map);
+                let color = ['green', 'blue', 'yellow', 'pink']
+                
+                return selectedPlaces.map((element, index) => {
+                    if (element.food.restaurant.location) {
+                        outPutMapData(element, color[index])
+                        return new mapboxgl.Marker({
+                                color: color[index]
+                            }).setLngLat([element.food.restaurant.location.lon, element.food.restaurant.location.lat])
+                            .addTo(map);
+                    }
+                });
+            }
 
-    <div class="mapclass">
-        <div id='map' style='width: 400px; height: 300px;'></div>
-        <div id='mapinfo' class="mapinfo">
-            <ul id="myList"></ul>
-        </div>
-    </div>
+            function outPutMapData(data, color) {
+                var lon = data.food.restaurant.location.lon
+                var lat = data.food.restaurant.location.lat
+                var link = `https://www.google.com/maps/search/?api=1&query=${lat},${lon}`
+                console.log(link)                
+                
+                var node = document.createElement("div");
+                var linkToMap = document.createElement("button")
+                $(linkToMap).attr({
+                    type:"button",
+                    class:"btn btn-dark",
+                    onclick:"window.location.href='"+link+"'",
+                    target:"_blank"
+                })
+                $(linkToMap).css("margin", "1em")
 
-    <script>
-        const lon = window.location.search.split("?")[1].split("&")[3].split("=")[1]
-        const lat = window.location.search.split("?")[1].split("&")[2].split("=")[1]
-        const tags = window.location.search.split("?")[1].split("&")[1].split("tags=")[1].replaceAll('+','&')
-        const food = window.location.search.split("?")[1].split("&")[0].split("=")[1]
+                linkToMap.innerHTML = 'Restaurant name: ' +
+                                data.food.restaurant.address + ' | ' +
+                                'Address: ' +
+                                data.food.restaurant.postal
+                
+                var textnode = document.createTextNode(data.food.restaurant.address + ' | ' +
+                    'Address: ' +
+                    data.food.restaurant.postal);
+                // linkToMap.appendChild(textnode);
+                node.appendChild(linkToMap)
 
-        console.log(tags)
+                node.style.color = color
+                document.getElementById("myList").appendChild(node);
+            }
 
-        const query = `https://api.edamam.com/api/menu-items/v2/search?app_id=2ba0ec45&app_key=ac665ae3e41a33e09736700ec5a0c738&q=${food}&lat=${lat}&lon=${lon}${tags}`
-        console.log(query)
-
-        fetch(query).then(res => res.json()).then(data => {
-            generateMap(data)
-        })
-
-        function updateImage() {
-            $("#imageContainer" + " img").attr("src", window.location.search.split("?")[1].split("&")[4].split("=")[1]);
-        }
-
-        function generateMap(data) {
-            const selectedPlaces = data['hints'].slice(0, 4)
-            mapboxgl.accessToken = 'pk.eyJ1IjoidGRhY2F5YW4iLCJhIjoiY2tyMWY5b2h2MGdwMzJ3cnpjMXBoaXh4ciJ9.ZgutlFxWK6MQx7Mhz7Njfg';
-            var map = new mapboxgl.Map({
-                container: 'map', // container ID
-                style: 'mapbox://styles/mapbox/streets-v11', // style URL
-                center: [lon, lat], // starting position [lng, lat]
-                zoom: 8 // starting zoom
-            });
-            new mapboxgl.Marker({
-                    color: "red",
-                    draggable: true
-                }).setLngLat([lon, lat])
-                .addTo(map);
-            let color = ['green', 'blue', 'yellow', 'pink']
-            return selectedPlaces.map((element, index) => {
-                if (element.food.restaurant.location) {
-                    outPutMapData(element, color[index])
-                    return new mapboxgl.Marker({
-                            color: color[index],
-                            draggable: true
-                        }).setLngLat([element.food.restaurant.location.lon, element.food.restaurant.location.lat])
-                        .addTo(map);
+            function outPutIngredients(data) {
+                var foodlist
+                for (let i = 0; i < 20; i++) {
+                    if (data.hits[i].recipe.label == food) {
+                        foodlist = data.hits[i].recipe.ingredientLines
+                        break
+                    }
                 }
-            });
-        }
+                if (!foodlist) {
+                    foodlist = data.hits[0].recipe.ingredientLines
+                }
 
-        function outPutMapData(data, color) {
-            var node = document.createElement("li");
-            var textnode = document.createTextNode('Restaurant name: ' +
-                data.food.restaurant.address + ' | ' +
-                'Address: ' +
-                data.food.restaurant.postal);
-            node.appendChild(textnode);
-            node.style.color = color
-            document.getElementById("myList").appendChild(node);
-        }
-    </script>
+                foodlist.forEach(element => {
+                    var node = document.createElement("li");
+                    var textnode = document.createTextNode(element);
+                    node.appendChild(textnode);
+                    document.getElementById("ingredientslist").appendChild(node);
+                })
+            }
 
+            function addFoodName() {
+                const element = document.getElementById("foodname");
+                var node = document.createElement("h3");
+                node.innerHTML = food.replaceAll('%20', ' ');
+                element.appendChild(node);
+            }
+        </script>
+    </div>
 </body>
 
 </html>

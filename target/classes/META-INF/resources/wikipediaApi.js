@@ -78,7 +78,6 @@ function removeUnwantedNode() {
 
 }
 
-
 function generateUrl(food) {
     return `https://api.codetabs.com/v1/proxy/?quest=https://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exchars=2000&titles=${food}`
 }
