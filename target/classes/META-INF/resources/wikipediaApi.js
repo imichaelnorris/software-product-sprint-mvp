@@ -10,7 +10,7 @@ function searchTerms(terms, iter, temp = []) {
                 if(currCount === 0)
                     searchTerm += terms[index];
                 else
-                    searchTerm += "%20" + terms[index];
+                    searchTerm += "_" + terms[index];
                 index++;
                 currCount++;
             }
@@ -23,6 +23,8 @@ function searchTerms(terms, iter, temp = []) {
 
 async function wiki(food) {
     //try getting wiki data with exactly the name passed
+    console.log(food)
+    
     let url = generateUrl(food)
     let response = await apiCall(url)
     console.log(response)
@@ -46,12 +48,13 @@ async function wiki(food) {
         console.log(newresponse)
 
         if (newresponse && newresponse.substr(0, 3) != '<!--' &&
-            newresponse.search('limit') == -1 && !newresponse.includes('may refer to')) {
+            newresponse.search('limit') == -1) {
+            // newresponse.search('limit') == -1 && !newresponse.includes('may refer to')) {
             addData(newresponse)
         }
     }
     
-    return
+    return 
 }
 
 function removeUnwantedNode() {

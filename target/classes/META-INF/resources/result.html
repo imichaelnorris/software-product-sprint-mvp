@@ -7,12 +7,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Chosen Food</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+    <link rel="stylesheet" href="style.css" />
 
     <script src='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.js'></script>
     <link href='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css' rel='stylesheet' />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
+    <script src="generalFunctions.js"></script>
+
     <style>
+        div  {
+            border: 1px solid black;
+        }
+        
         .img-fluid {
             width: 100%;
             height: auto;
@@ -25,17 +32,55 @@
     </style>
 </head>
 
-<body onload="wiki(window.location.search.split('?')[1].split('&')[0].split('=')[1]); updateImage();">
-    <div class="container imageContainer" id="imageContainer" style="text-align: center;">
-        <img src="./images/foodServe.PNG" class="img-fluid" width="80%" alt="..." />
+<body class="overflow-y-hidden" onload="pageInit()">
+    <style> 
+        #foodhistory {
+            height: 39em;
+            overflow-y: auto;
+        }    
+    </style>
+    <!-- Loading page -->
+    <div id="loading">
+        <header></header> 
+        <img id="loading-image" src="./images/loading.gif" alt="Loading..." />
+        <footer></footer>
     </div>
 
-    <div class="container" id="foodhistory"></div>
+    <!-- Header -->
+    <div class="logo" id="logo">
+        <img src="./images/myfoodie.png" class="logoimage" />
+        <div class="logotitle">
+            <h4 style="color: white; font-family: Georgia, 'Times New Roman', Times, serif;">MyFoodie</h4>
+        </div>
+    </div>
+    <div>
+        <div class="container imageContainer" id="imageContainer" style="text-align: center;">
+            <img src="./images/foodServe.PNG" class="img-fluid" width="80%" alt="..." />
+        </div>
 
-    <script src="wikipediaApi.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+        <div class="container" id="foodhistory"></div>
 
-    <div id='map' style='width: 400px; height: 300px;'></div>
+        <script src="wikipediaApi.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+        <div id='map' style='width: 400px; height: 300px;'></div>
+    </div>    
+    
+
+    <script>
+        function pageInit() {
+            var foodName = window.location.search.split('?')[1].split('&')[0].split('=')[1]
+            wiki(foodName).then(function() {
+                updateImage();
+                $("body").removeClass("overflow-y-hidden")
+                hideElement('loading', 400);
+            })
+                        
+        }
+    </script> 
+
+
+
 
     <script>
         const lon = window.location.search.split("?")[1].split("&")[3].split("=")[1]
