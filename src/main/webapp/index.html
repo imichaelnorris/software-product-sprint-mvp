@@ -10,15 +10,13 @@
     <link rel="stylesheet" href="cardImage.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="generalFunctions.js"></script>
     <script src="foodRecommendationAPI.js"></script>
 
     <style>
-        /* div, img {
-            border: 1px solid black;
-        } */
-        /* .hidden {
-            display: none;
-        } */
+        body {
+            font-family: Georgia;
+        }
         #div2, #div3 {
             display: none;
         }
@@ -57,7 +55,7 @@
                         <div class="row justify-content-center">
                             <div class="meal card clickable">
                                 <div class="card-body" id="breakfastOpt">
-                                    <h2 class="card-title">Breakfast</h2>
+                                    <h1 class="card-title"><b>Breakfast</b></h1>
                                     <p class="card-text"></p>
                                     <img id="check-plus" src="images/check-plus.png">
                                     <img id="check-minus" src="images/check-minus.png">
@@ -65,7 +63,7 @@
                             </div>
                             <div class="meal card clickable">
                                 <div class="card-body" id="lunchDinnerOpt">
-                                    <h2 class="card-title">Lunch/Dinner</h2>
+                                    <h1 class="card-title"><b>Lunch/Dinner</b></h1>
                                     <p class="card-text"></p>
                                     <img id="check-plus" src="images/check-plus.png">
                                     <img id="check-minus" src="images/check-minus.png">
@@ -73,7 +71,7 @@
                             </div>
                             <div class="meal card clickable">
                                 <div class="card-body" id="dessertOpt">
-                                    <h2 class="card-title">Dessert</h2>
+                                    <h1 class="card-title"><b>Dessert</b></h1>
                                     <p class="card-text"></p>
                                     <img id="check-plus" src="images/check-plus.png">
                                     <img id="check-minus" src="images/check-minus.png">
@@ -106,7 +104,7 @@
                         <div class="row" style="padding: 1px; justify-content: space-evenly;"> 
                             <div class="pref meat card clickable">
                                 <div class="card-body" id="chickenOpt">
-                                    <h4 class="card-title">Chicken</h4>
+                                    <h1 class="card-title"><b>Chicken</b></h1>
                                     <p class="card-text"></p>
                                     <img id="check-plus" src="images/check-plus.png">
                                     <img id="check-minus" src="images/check-minus.png">
@@ -114,7 +112,7 @@
                             </div>
                             <div class="pref meat card clickable">
                                 <div class="card-body" id="beefOpt">
-                                    <h4 class="card-title">Beef</h4>
+                                    <h1 class="card-title"><b>Beef</b></h1>
                                     <p class="card-text"></p>
                                     <img id="check-plus" src="images/check-plus.png">
                                     <img id="check-minus" src="images/check-minus.png">
@@ -122,7 +120,7 @@
                             </div>
                             <div class="pref meat card clickable">
                                 <div class="card-body" id="porkOpt">
-                                    <h4 class="card-title">Pork</h4>
+                                    <h1 class="card-title"><b>Pork</b></h1>
                                     <p class="card-text"></p>
                                     <img id="check-plus" src="images/check-plus.png">
                                     <img id="check-minus" src="images/check-minus.png">
@@ -130,7 +128,7 @@
                             </div>
                             <div class="pref meat card clickable">
                                 <div class="card-body" id="goatOpt">
-                                    <h4 class="card-title">Goat</h4>
+                                    <h1 class="card-title"><b>Goat</b></h1>
                                     <p class="card-text"></p>
                                     <img id="check-plus" src="images/check-plus.png">
                                     <img id="check-minus" src="images/check-minus.png">
@@ -138,7 +136,7 @@
                             </div>
                             <div class="pref meat card clickable">
                                 <div class="card-body" id="lambOpt">
-                                    <h4 class="card-title">Lamb</h4>
+                                    <h1 class="card-title"><b>Lamb</b></h1>
                                     <p class="card-text"></p>
                                     <img id="check-plus" src="images/check-plus.png">
                                     <img id="check-minus" src="images/check-minus.png">
@@ -151,7 +149,7 @@
                         <div class="row" style="padding: 1px; justify-content: space-evenly;">
                             <div class="pref other card clickable">
                                 <div class="card-body" id="seafoodOpt">
-                                    <h4 class="card-title">Seafood</h4>
+                                    <h1 class="card-title"><b>Seafood</b></h1>
                                     <p class="card-text"></p>
                                     <img id="check-plus" src="images/check-plus.png">
                                     <img id="check-minus" src="images/check-minus.png">
@@ -159,7 +157,7 @@
                             </div>
                             <div class="pref other card clickable">
                                 <div class="card-body" id="pastaOpt">
-                                    <h4 class="card-title">Pasta</h4>
+                                    <h1 class="card-title"><b>Pasta</b></h1>
                                     <p class="card-text"></p>
                                     <img id="check-plus" src="images/check-plus.png">
                                     <img id="check-minus" src="images/check-minus.png">
@@ -167,7 +165,7 @@
                             </div>
                             <div class="pref other card clickable">
                                 <div class="card-body" id="vegetarianOpt">
-                                    <h4 class="card-title">Vegetarian</h4>
+                                    <h1 class="card-title"><b>Vegetarian</b></h1>
                                     <p class="card-text"></p>
                                     <img id="check-plus" src="images/check-plus.png">
                                     <img id="check-minus" src="images/check-minus.png">
@@ -175,7 +173,7 @@
                             </div>
                             <div class="pref other card clickable">
                                 <div class="card-body" id="veganOpt">
-                                    <h4 class="card-title">Vegan</h4>
+                                    <h1 class="card-title"><b>Vegan</b></h1>
                                     <p class="card-text"></p>
                                     <img id="check-plus" src="images/check-plus.png">
                                     <img id="check-minus" src="images/check-minus.png">
@@ -209,7 +207,7 @@
                         <div class="row justify-content-center">
                             <div class="alg card clickable">
                                 <div class="card-body" id="alcoholAlrgy">
-                                    <h4 class="card-title">Alcohol</h4>
+                                    <h1 class="card-title"><b>Alcohol</b></h1>
                                     <p class="card-text"></p>
                                     <img id="check-plus" src="images/check-plus.png">
                                     <img id="check-minus" src="images/check-minus.png">
@@ -217,7 +215,7 @@
                             </div>
                             <div class="alg card clickable">
                                 <div class="card-body" id="eggAlrgy">
-                                    <h4 class="card-title">Eggs</h4>
+                                    <h1 class="card-title"><b>Eggs</b></h1>
                                     <p class="card-text"></p>
                                     <img id="check-plus" src="images/check-plus.png">
                                     <img id="check-minus" src="images/check-minus.png">
@@ -225,7 +223,7 @@
                             </div>
                             <div class="alg card clickable">
                                 <div class="card-body" id="fishAlrgy">
-                                    <h4 class="card-title">Fish</h4>
+                                    <h1 class="card-title"><b>Fish</b></h1>
                                     <p class="card-text"></p>
                                     <img id="check-plus" src="images/check-plus.png">
                                     <img id="check-minus" src="images/check-minus.png">
@@ -235,7 +233,7 @@
                         <div class="row justify-content-center">
                             <div class="alg card clickable">
                                 <div class="card-body" id="glutenAlrgy">
-                                    <h4 class="card-title">Gluten</h4>
+                                    <h1 class="card-title"><b>Gluten</b></h1>
                                     <p class="card-text"></p>
                                     <img id="check-plus" src="images/check-plus.png">
                                     <img id="check-minus" src="images/check-minus.png">
@@ -243,7 +241,7 @@
                             </div>
                             <div class="alg card clickable"">
                                 <div class="card-body" id="peanutAlrgy">
-                                    <h4 class="card-title">Peanuts</h4>
+                                    <h1 class="card-title"><b>Peanuts</b></h1>
                                     <p class="card-text"></p>
                                     <img id="check-plus" src="images/check-plus.png">
                                     <img id="check-minus" src="images/check-minus.png">
@@ -251,7 +249,7 @@
                             </div>
                             <div class="alg card clickable">
                                 <div class="card-body" id="shellfishAlrgy">
-                                    <h4 class="card-title">Shellfish</h4>
+                                    <h1 class="card-title"><b>Shellfish</b></h1>
                                     <p class="card-text"></p>
                                     <img id="check-plus" src="images/check-plus.png">
                                     <img id="check-minus" src="images/check-minus.png">
@@ -261,7 +259,7 @@
                         <div class="row justify-content-center">
                             <div class="alg card clickable" id="soyAlrgy">
                                 <div class="card-body">
-                                    <h4 class="card-title">Soy Beans</h4>
+                                    <h1 class="card-title"><b>Soy Beans</b></h1>
                                     <p class="card-text"></p>
                                     <img id="check-plus" src="images/check-plus.png">
                                     <img id="check-minus" src="images/check-minus.png">
@@ -269,7 +267,7 @@
                             </div>
                             <div class="alg card clickable">
                                 <div class="card-body" id="tree-nutAlrgy">
-                                    <h4 class="card-title">Tree Nuts</h4>
+                                    <h1 class="card-title"><b>Tree Nuts</b></h1>
                                     <p class="card-text"></p>
                                     <img id="check-plus" src="images/check-plus.png">
                                     <img id="check-minus" src="images/check-minus.png">
@@ -277,7 +275,7 @@
                             </div>
                             <div class="alg card clickable">
                                 <div class="card-body" id="wheatAlrgy">
-                                    <h4 class="card-title">Wheat</h4>
+                                    <h1 class="card-title"><b>Wheat</b></h1>
                                     <p class="card-text"></p>
                                     <img id="check-plus" src="images/check-plus.png">
                                     <img id="check-minus" src="images/check-minus.png">
@@ -298,66 +296,6 @@
         </div>
 <!-- -------------------------------------------------------------------------------------------------- -->
         <script> 
-            function toggleElement(...arr) {
-                for(var id of arr)
-                    var isVisible = $("#" + id).css('display') == "none" ? showElement(id) : hideElement(id);
-            }
-            
-            function showElement(id, time = 0) { 
-                $("#" + id).fadeIn(time); 
-            }
-
-            function hideElement(id, time = 0) { 
-                $("#" + id).fadeOut(time); 
-            }
-
-            function slideRight(...ids) {
-                for(var id of ids) {
-                    $("#" + id).removeClass("originalPos");
-                    $("#" + id).addClass("slideRight");
-                    setTimeout(function() {
-                        hideElement(id);
-                    }, 1000)
-                }         
-            }
-
-            function slideOriginal(...ids) {
-                for(var id of ids) {
-                    showElement(id);
-                    $("#" + id).addClass("originalPos");
-                    setTimeout(function() {
-                        $("#" + id).removeClass("slideRight");
-                    }, 1000)
-                }              
-            }
-
-            function disableOptions(...arr) {
-                for(var e of arr) {
-
-                    if($("#" + e + "Opt").parent().hasClass("selected") || $("#" + e + "Alrgy").parent().hasClass("selected")) {
-                        $("#" + e + "Opt").parent().removeClass("selected");
-                        $("#" + e + "Alrgy").parent().removeClass("selected");
-                        
-                        $("#" + e + "Opt").find("#check-plus").css("display", "none")
-                        $("#" + e + "Alrgy").find("#check-plus").css("display", "none")
-                    }                    
-                    $("#" + e + "Opt").parent().addClass("disabled");
-                    $("#" + e + "Alrgy").parent().addClass("disabled");
-                    
-                    $("#" + e + "Opt").find("#check-minus").css("display", "block")
-                    $("#" + e + "Alrgy").find("#check-minus").css("display", "block")
-                }
-            }
-
-            function enableOptions(...arr) {
-                for(var e of arr) {
-                    $("#" + e + "Opt").parent().removeClass("disabled");
-                    $("#" + e + "Alrgy").parent().removeClass("disabled");
-                    $("#" + e + "Opt").find("#check-minus").css("display", "none")
-                    $("#" + e + "Alrgy").find("#check-minus").css("display", "none")
-                }
-            } 
-
             $(".backToOne").click(function () {
                 slideRight("div2","div3")
             })
@@ -381,21 +319,6 @@
                 }
                 e.stopPropagation();
             });
-
-            function checkOptions() {
-                if($("#breakfastOpt").parent().hasClass("selected")) {
-                    disableOptions("lunchDinner","egg","gluten","wheat")
-                }
-                else {
-                    enableOptions("lunchDinner","egg","gluten","wheat")
-                }
-                if($("#lunchDinnerOpt").parent().hasClass("selected")) {
-                    disableOptions("breakfast")
-                }
-                else {
-                    enableOptions("breakfast")
-                }
-            }
         </script>
 
         <div class="buttonClass">
