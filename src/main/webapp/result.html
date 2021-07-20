@@ -10,21 +10,24 @@
 
     <script src='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.js'></script>
     <link href='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css' rel='stylesheet' />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <style>
         .img-fluid {
-            height: 450px !important;
+            width: 100%;
+            height: auto;
         }
         
         .imageContainer {
             margin-top: 4em;
+            width: 450px !important
         }
     </style>
 </head>
 
-<body onload="wiki(window.location.search.split('=')[1])">
-    <div class="container imageContainer" style="text-align: center;">
-        <img src="./images/image.webp" class="img-fluid" width="80%" alt="..." />
+<body onload="wiki(window.location.search.split('=')[1]); updateImage();">
+    <div class="container imageContainer" id="imageContainer" style="text-align: center;">
+        <img src="./images/foodServe.PNG" class="img-fluid" width="80%" alt="..." />
     </div>
 
     <div class="container" id="foodhistory"></div>
@@ -35,13 +38,44 @@
     <div id='map' style='width: 400px; height: 300px;'></div>
 
     <script>
-        mapboxgl.accessToken = 'pk.eyJ1IjoidGRhY2F5YW4iLCJhIjoiY2tyMWY5b2h2MGdwMzJ3cnpjMXBoaXh4ciJ9.ZgutlFxWK6MQx7Mhz7Njfg';
-        var map = new mapboxgl.Map({
-            container: 'map', // container ID
-            style: 'mapbox://styles/mapbox/streets-v11', // style URL
-            center: [-74.5, 40], // starting position [lng, lat]
-            zoom: 9 // starting zoom
-        });
+        const lon = window.location.search.split("?")[1].split("&")[2].split("=")[1]
+        const lat = window.location.search.split("?")[1].split("&")[1].split("=")[1]
+        const food = window.location.search.split("?")[1].split("&")[0].split("=")[1]
+        const query = `https://api.edamam.com/api/menu-items/v2/search?app_id=2ba0ec45&app_key=ac665ae3e41a33e09736700ec5a0c738&q=${food}&lat=${lat}&lon=${lon}`
+
+        fetch(query).then(res => res.json()).then(data => {
+            generateMap(data)
+        })
+
+        function updateImage() {
+            $("#imageContainer" + " img").attr("src", window.location.search.split("?")[1].split("&")[3].split("=")[1]);
+        }
+
+        function generateMap(data) {
+            const selectedPlaces = data['hints'].slice(0, 4)
+            mapboxgl.accessToken = 'pk.eyJ1IjoidGRhY2F5YW4iLCJhIjoiY2tyMWY5b2h2MGdwMzJ3cnpjMXBoaXh4ciJ9.ZgutlFxWK6MQx7Mhz7Njfg';
+            var map = new mapboxgl.Map({
+                container: 'map', // container ID
+                style: 'mapbox://styles/mapbox/streets-v11', // style URL
+                center: [-90.10, 29.85], // starting position [lng, lat]
+                zoom: 1 // starting zoom
+            });
+            new mapboxgl.Marker({
+                    color: "red",
+                    draggable: true
+                }).setLngLat([lon, lat])
+                .addTo(map);
+
+            return selectedPlaces.map(element => {
+                if (element.food.restaurant.location) {
+                    return new mapboxgl.Marker({
+                            color: "#FFFFFF ",
+                            draggable: true
+                        }).setLngLat([element.food.restaurant.location.lon, element.food.restaurant.location.lat])
+                        .addTo(map);
+                }
+            });
+        }
     </script>
 
 </body>

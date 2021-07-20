@@ -29,12 +29,9 @@ label.form-check-label {
 }
 
 .meal-type,
-.cuisine,
 .categories,
 .allergies {
     background-color: #67582b;
-    /* width: 15em;
-    height: 5em; */
     padding: 1em 5em;
     margin-top: 20%;
 }
@@ -42,8 +39,6 @@ label.form-check-label {
 .form-check {
     padding-left: 2em !important;
 }
-
-.categoryTitle {}
 
 .btn {
     padding: .5rem 3rem !important;
@@ -62,7 +57,14 @@ label.form-check-label {
 
 .foodcards {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: center;
+}
+
+.foodcards {
+    padding-top: 7em;
+    /* padding-bottom: 15em; */
+    background-color: rgba(140, 84, 84, 0.926);
+    height: inherit;
 }
 
 .logo {
@@ -71,29 +73,137 @@ label.form-check-label {
     margin-left: 1em; */
 }
 
-.logotitle {
-    margin-top: 2.3em !important;
-}
-
 .logotitle,
 .logoimage {
     margin-top: 1em;
+}
+
+.logotitle {
+    margin-top: 2.3em !important;
 }
 
 .logoimage {
     margin-left: 1.5em;
 }
 
-.foodcards {
-    padding-top: 7em;
-    padding-bottom: 15em;
-}
 
 .secondsection {
+    background-color: rgba(245,245,245);
     display: flex;
     justify-content: center;
 }
 
 .hideelement {
     display: none !important;
+}
+
+#div1,
+#div2,
+#div3 {
+    position: absolute;
+    overflow: hidden !important;
+    height: 48em !important;
+}
+
+#loading {
+    background-color: rgba(245,245,245);
+    padding-top: 15em;
+    height: 40em;
+}
+
+#loading-image {
+    display: block;
+    margin-left: auto;
+    margin-right: auto
+}
+
+::-webkit-scrollbar {
+    width: 0px;
+    background: transparent; 
+}
+
+.backNextClass {
+    display: flex;
+    justify-content: space-between;
+    margin: 0;
+    padding: 1.5em 1em 0;
+    height: 6em;
+    width: 100%;
+}
+
+.backNextClass button {
+    height: 3em;
+}
+
+.side-label {
+    text-align: center;
+    border: 1px solid black;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    background-color: rgb(209, 143, 143);
+    height: 48em;
+}
+
+.card {
+    margin-top: 1em!;
+    border: 3px;
+    border-radius: 1rem !important;
+}
+
+.card-body {
+    text-align: center;
+    padding: 35% 10% !important;
+}
+
+/* Meal Elements */
+.meal.foodcards {
+    padding: 3em 0 0 0 !important;
+}
+
+.meal.card {
+    margin-left: 1em;
+    margin-right: 1em;
+    height: 39rem;
+    width: 25rem;
+}
+
+/* Preference Elements */
+.pref.foodcards {
+    padding: 3em 0 0;
+    flex-direction: column;
+    height: 48em;
+}
+
+.pref.meat.card {
+    margin-left: 1em;
+    margin-right: 1em;
+    height: 15rem;
+    width: 15rem;
+}
+
+.pref.other.card {
+    flex: 0 0 auto !important;
+    margin-left: 1em;
+    margin-right: 1em;
+    height: 25rem;
+    width: 20rem;
+}
+
+/* Allergy Elements */
+.alg.foodcards {
+    padding: 3em 0 0;
+    flex-direction: column;
+}
+
+.alg.card {
+    margin: 1em !important;
+    height: 15rem;
+    width: 15rem;
+}
+
+.overflow-wrap {
+    flex-wrap: nowrap;
+    overflow-y: auto;
+    margin-bottom: 0.75em;
+    padding: 0;
+    height: 85%;
 }
