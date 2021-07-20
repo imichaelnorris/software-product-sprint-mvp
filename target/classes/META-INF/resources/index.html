@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="cardImage.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="generalFunctions.js"></script>
+    <script src="foodRecommendationAPI.js"></script>
+
+    <style>
+        body {
+            font-family: Georgia;
+        }
+        #div2, #div3 {
+            display: none;
+        }
+
+    </style> 
+</head>
+
+
+
+<body onload="pageInit()" style="overflow-x: hidden;">
+    <div class="bg section1" id="section1" style="position: relative;">
+        <div id="loading">
+            <header></header> 
+            <img id="loading-image" src="./images/loading.gif" alt="Loading..." />
+            <footer></footer>
+        </div>
+
+        <!-- Header -->
+        <div class="logo" id="logo">
+            <img src="./images/myfoodie.png" class="logoimage" />
+            <div class="logotitle">
+                <h4 style="color: white; font-family: Georgia, 'Times New Roman', Times, serif;">MyFoodie</h4>
+            </div>
+        </div>
+
+<!-- -------------------------------------------------------------------------------------------------- -->
+    
+        <!-- Test Area for UI Update -->
+        <div class="container-fluid hidden" id="div1">
+            <div class="row" style="height: inherit !important;">
+                <div class="col-1 side-label">
+                    <h1>M<br>E<br>A<br>L</h1>
+                </div>
+                <div class="col-11 meal foodcards">
+                    <div class="row justify-content-center" style="width:100%">
+                        <div class="row justify-content-center">
+                            <div class="meal card clickable">
+                                <div class="card-body" id="breakfastOpt">
+                                    <h1 class="card-title"><b>Breakfast</b></h1>
+                                    <p class="card-text"></p>
+                                    <img id="check-plus" src="images/check-plus.png">
+                                    <img id="check-minus" src="images/check-minus.png">
+                                </div>
+                            </div>
+                            <div class="meal card clickable">
+                                <div class="card-body" id="lunchDinnerOpt">
+                                    <h1 class="card-title"><b>Lunch/Dinner</b></h1>
+                                    <p class="card-text"></p>
+                                    <img id="check-plus" src="images/check-plus.png">
+                                    <img id="check-minus" src="images/check-minus.png">
+                                </div>
+                            </div>
+                            <div class="meal card clickable">
+                                <div class="card-body" id="dessertOpt">
+                                    <h1 class="card-title"><b>Dessert</b></h1>
+                                    <p class="card-text"></p>
+                                    <img id="check-plus" src="images/check-plus.png">
+                                    <img id="check-minus" src="images/check-minus.png">
+                                </div>
+                            </div>
+                        </div> 
+                        <div class="backNextClass justify-content-end">
+                            <button type="button" class="btn btn-dark" onclick="slideOriginal('div2')">
+                                Next
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+<!-- -------------------------------------------------------------------------------------------------- -->
+        <div class="container-fluid hidden" id="div2">
+            <div class="row justify-content-end">
+                <div class="col-1 backToOne"></div>
+                <div class="col-1 side-label">
+                    <h1>
+                        P<br>R<br>E<br>F<br>E<br>R<br>E<br>N<br>C<br>E<br>S
+                    </h1>
+                </div>
+                <div class="col-10 pref foodcards">
+                    <div class="overflow-wrap">
+                        <div class="row"> 
+                            <h2>Meat</h2>
+                        </div>
+                        <div class="row" style="padding: 1px; justify-content: space-evenly;"> 
+                            <div class="pref meat card clickable">
+                                <div class="card-body" id="chickenOpt">
+                                    <h1 class="card-title"><b>Chicken</b></h1>
+                                    <p class="card-text"></p>
+                                    <img id="check-plus" src="images/check-plus.png">
+                                    <img id="check-minus" src="images/check-minus.png">
+                                </div>
+                            </div>
+                            <div class="pref meat card clickable">
+                                <div class="card-body" id="beefOpt">
+                                    <h1 class="card-title"><b>Beef</b></h1>
+                                    <p class="card-text"></p>
+                                    <img id="check-plus" src="images/check-plus.png">
+                                    <img id="check-minus" src="images/check-minus.png">
+                                </div>
+                            </div>
+                            <div class="pref meat card clickable">
+                                <div class="card-body" id="porkOpt">
+                                    <h1 class="card-title"><b>Pork</b></h1>
+                                    <p class="card-text"></p>
+                                    <img id="check-plus" src="images/check-plus.png">
+                                    <img id="check-minus" src="images/check-minus.png">
+                                </div>
+                            </div>
+                            <div class="pref meat card clickable">
+                                <div class="card-body" id="goatOpt">
+                                    <h1 class="card-title"><b>Goat</b></h1>
+                                    <p class="card-text"></p>
+                                    <img id="check-plus" src="images/check-plus.png">
+                                    <img id="check-minus" src="images/check-minus.png">
+                                </div>
+                            </div>
+                            <div class="pref meat card clickable">
+                                <div class="card-body" id="lambOpt">
+                                    <h1 class="card-title"><b>Lamb</b></h1>
+                                    <p class="card-text"></p>
+                                    <img id="check-plus" src="images/check-plus.png">
+                                    <img id="check-minus" src="images/check-minus.png">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row"> 
+                            <h2> <br>Other</h2>
+                        </div>
+                        <div class="row" style="padding: 1px; justify-content: space-evenly;">
+                            <div class="pref other card clickable">
+                                <div class="card-body" id="seafoodOpt">
+                                    <h1 class="card-title"><b>Seafood</b></h1>
+                                    <p class="card-text"></p>
+                                    <img id="check-plus" src="images/check-plus.png">
+                                    <img id="check-minus" src="images/check-minus.png">
+                                </div>
+                            </div>
+                            <div class="pref other card clickable">
+                                <div class="card-body" id="pastaOpt">
+                                    <h1 class="card-title"><b>Pasta</b></h1>
+                                    <p class="card-text"></p>
+                                    <img id="check-plus" src="images/check-plus.png">
+                                    <img id="check-minus" src="images/check-minus.png">
+                                </div>
+                            </div>
+                            <div class="pref other card clickable">
+                                <div class="card-body" id="vegetarianOpt">
+                                    <h1 class="card-title"><b>Vegetarian</b></h1>
+                                    <p class="card-text"></p>
+                                    <img id="check-plus" src="images/check-plus.png">
+                                    <img id="check-minus" src="images/check-minus.png">
+                                </div>
+                            </div>
+                            <div class="pref other card clickable">
+                                <div class="card-body" id="veganOpt">
+                                    <h1 class="card-title"><b>Vegan</b></h1>
+                                    <p class="card-text"></p>
+                                    <img id="check-plus" src="images/check-plus.png">
+                                    <img id="check-minus" src="images/check-minus.png">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="backNextClass">
+                        <button type="button" class="btn btn-dark" onclick="slideRight('div2')">
+                            Back
+                        </button>
+                        <button type="button" class="btn btn-dark" onclick="slideOriginal('div3');">
+                            Next
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+<!-- -------------------------------------------------------------------------------------------------- -->
+        <div class="container-fluid hidden" id="div3">
+            <div class="row" style="height: inherit !important;">
+                <div class="col-1 backToOne"></div>
+                <div class="col-1 backToTwo"></div>
+                <div class="col-1 side-label">
+                    <h1>
+                        A<br>L<br>L<br>E<br>R<br>G<br>I<br>E<br>S
+                    </h1>
+                </div>
+                <div class="col-9 alg foodcards">
+                    <div class="overflow-wrap">
+                        <div class="row justify-content-center">
+                            <div class="alg card clickable">
+                                <div class="card-body" id="alcoholAlrgy">
+                                    <h1 class="card-title"><b>Alcohol</b></h1>
+                                    <p class="card-text"></p>
+                                    <img id="check-plus" src="images/check-plus.png">
+                                    <img id="check-minus" src="images/check-minus.png">
+                                </div>
+                            </div>
+                            <div class="alg card clickable">
+                                <div class="card-body" id="eggAlrgy">
+                                    <h1 class="card-title"><b>Eggs</b></h1>
+                                    <p class="card-text"></p>
+                                    <img id="check-plus" src="images/check-plus.png">
+                                    <img id="check-minus" src="images/check-minus.png">
+                                </div>
+                            </div>
+                            <div class="alg card clickable">
+                                <div class="card-body" id="fishAlrgy">
+                                    <h1 class="card-title"><b>Fish</b></h1>
+                                    <p class="card-text"></p>
+                                    <img id="check-plus" src="images/check-plus.png">
+                                    <img id="check-minus" src="images/check-minus.png">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="alg card clickable">
+                                <div class="card-body" id="glutenAlrgy">
+                                    <h1 class="card-title"><b>Gluten</b></h1>
+                                    <p class="card-text"></p>
+                                    <img id="check-plus" src="images/check-plus.png">
+                                    <img id="check-minus" src="images/check-minus.png">
+                                </div>
+                            </div>
+                            <div class="alg card clickable"">
+                                <div class="card-body" id="peanutAlrgy">
+                                    <h1 class="card-title"><b>Peanuts</b></h1>
+                                    <p class="card-text"></p>
+                                    <img id="check-plus" src="images/check-plus.png">
+                                    <img id="check-minus" src="images/check-minus.png">
+                                </div>
+                            </div>
+                            <div class="alg card clickable">
+                                <div class="card-body" id="shellfishAlrgy">
+                                    <h1 class="card-title"><b>Shellfish</b></h1>
+                                    <p class="card-text"></p>
+                                    <img id="check-plus" src="images/check-plus.png">
+                                    <img id="check-minus" src="images/check-minus.png">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="alg card clickable" id="soyAlrgy">
+                                <div class="card-body">
+                                    <h1 class="card-title"><b>Soy Beans</b></h1>
+                                    <p class="card-text"></p>
+                                    <img id="check-plus" src="images/check-plus.png">
+                                    <img id="check-minus" src="images/check-minus.png">
+                                </div>
+                            </div>
+                            <div class="alg card clickable">
+                                <div class="card-body" id="tree-nutAlrgy">
+                                    <h1 class="card-title"><b>Tree Nuts</b></h1>
+                                    <p class="card-text"></p>
+                                    <img id="check-plus" src="images/check-plus.png">
+                                    <img id="check-minus" src="images/check-minus.png">
+                                </div>
+                            </div>
+                            <div class="alg card clickable">
+                                <div class="card-body" id="wheatAlrgy">
+                                    <h1 class="card-title"><b>Wheat</b></h1>
+                                    <p class="card-text"></p>
+                                    <img id="check-plus" src="images/check-plus.png">
+                                    <img id="check-minus" src="images/check-minus.png">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="backNextClass">
+                        <button type="button" class="btn btn-dark" onclick="slideRight('div3')">
+                            Back
+                        </button>
+                        <button type="button" class="btn btn-dark" id="suggest" onclick=" foodFunctionCaller();">
+                            Recommend Me Food!
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+<!-- -------------------------------------------------------------------------------------------------- -->
+        <script> 
+            $(".backToOne").click(function () {
+                slideRight("div2","div3")
+            })
+            $(".backToTwo").click(function () {
+                slideRight("div3")
+            })
+
+            var currentItem = null;
+            $(".clickable").click(function(e) {
+                if($(this).hasClass("selected")) {
+                    $(this).removeClass("selected")
+                    $(this).find("#check-plus").css("display", "none")
+                    checkOptions()
+                    currentItem = null;
+                } else {
+                    if(!$(this).hasClass("disabled")){
+                        currentItem = $(this).addClass("selected");
+                        $(this).find("#check-plus").css("display", "block")
+                        checkOptions()
+                    }                 
+                }
+                e.stopPropagation();
+            });
+        </script>
+
+        <div class="buttonClass">
+            <button type="button" class="btn btn-dark" id="suggest" onclick="foodFunctionCaller(); ">Suggest Random Food</button>
+            <!-- <a href="#section2" class="btn btn-dark">Suggest Random Food</a> -->
+        </div>
+    </div>
+
+    <!-- TODO: add section for user location -->
+    <div class="section2 hideelement" id="section2">
+         <div class="secondsection">
+            <h2>Food List</h2>
+        </div>
+        <div class="rec foodcards justify-content-center">
+            <div class="card" style="width: 18rem;" id="rec-card-0">
+                <img class="card-img-top" src="./images/foodServe.PNG" alt="Card image cap">
+                <div class="card-body">
+                    <h4 class="card-title">Food Name ...</h4>
+                    <!-- <p class="card-text"></p> -->
+                    <a href="./result.html" class="btn btn-primary" >View Food</a>
+                </div>
+            </div>
+            <div class="card" style="width: 18rem;" id="rec-card-1">
+                <img class="card-img-top" src="./images/foodServe.PNG" alt="Card image cap">
+                <div class="card-body">
+                    <h4 class="card-title">Food Name ...</h4>
+                    <!-- <p class="card-text"></p> -->
+                    <a href="./result.html" class="btn btn-primary" target="_blank">View Food</a>
+                </div>
+            </div>
+            <div class="card" style="width: 18rem;" id="rec-card-2">
+                <img class="card-img-top" src="./images/foodServe.PNG" alt="Card image cap">
+                <div class="card-body">
+                    <h4 class="card-title">Food Name ...</h4>
+                    <!-- <p class="card-text"></p> -->
+                    <a href="./result.html" class="btn btn-primary" target="_blank">View Food</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        function pageInit() {
+            initDB();
+            slideRight('div2','div3');
+            hideElement('loading', 400);
+        }
+
+        let initialImageSource = document.getElementsByClassName("card-img-top")[0].src
+        var isGenerated = false;
+
+        function foodFunctionCaller() {
+            showElement('loading', 400);
+            hideFunction('section2');
+            genRecommendationUpdate();
+            showRecommendations();
+        }
+
+        function hideFunction(...ids) {
+            for(var id of ids) {
+                var element = document.getElementById(id);
+                element.classList.add("hideelement");
+            }
+        }
+
+        function showRecommendations() {
+            setTimeout( function() {
+                hideElement('loading', 400);
+                
+                var element = document.getElementById("section2");
+                var isShown = false;
+
+                element.classList.remove("hideelement");
+                $('html,body').animate({
+                    scrollTop: $(".section2").offset().top
+                },'slow');
+            }, 3000);
+        }
+
+        $("#suggest").click(function() {
+
+            var element = document.getElementById("loading");
+            element.classList.remove("hideelement");
+            $('html,body').animate({
+                    scrollTop: $("#loading").offset().top
+                },
+                'slow');
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+    </script>
+</body>
+
+</html>
