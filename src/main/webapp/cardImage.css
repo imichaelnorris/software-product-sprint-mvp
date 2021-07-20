@@ -1,5 +1,6 @@
 .meal.card, .pref.card, .alg.card {
     color: white;
+    -webkit-user-select: none;
 }
 
 .meal.card .card-body {
@@ -14,6 +15,11 @@
     margin: 1em 2em;
 }
 
+.card {
+    background-color: white !important;
+}
+
+/* Enable Disable Elements */
 .clickable {
     align-items: center;
     overflow: hidden;
@@ -33,16 +39,23 @@
 }
 
 .disabled {
-    filter: brightness(50%);
-    border: 7px solid rgb(243, 63, 63) !important;
-}
-
-.selected { 
     filter: brightness(70%);
-    border: 7px solid rgb(120, 120, 253) !important;
+    border: 5px solid rgb(247, 44, 44) !important;
+}
+
+.selected {
+    filter: brightness(90%);
+    border: 5px solid rgb(68, 68, 255) !important;
+}
+
+#check-plus, #check-minus {
+    display: none;
+    margin: 0 auto;
+    width: 100px;
 }
 
 
+/* Options */
 #breakfastOpt {
     background: linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05)), url("./images/card-bg/breakfast-bg.jpeg");
     background-position: center;

@@ -73,16 +73,6 @@ label.form-check-label {
     margin-left: 1em; */
 }
 
-.slideRight {
-    transition: transform 1s ease;    
-    transform: translateX(100%)
-}
-
-.originalPos {
-    transition: transform 1s ease;    
-    transform: translateX(0%)
-}
-
 .logotitle,
 .logoimage {
     margin-top: 1em;
@@ -95,7 +85,6 @@ label.form-check-label {
 .logoimage {
     margin-left: 1.5em;
 }
-
 
 .secondsection {
     background-color: rgba(245,245,245);
@@ -116,6 +105,15 @@ label.form-check-label {
     height: 48em !important;
 }
 
+.slideRight {
+    transition: transform 1s ease;    
+    transform: translateX(100%)
+}
+
+.originalPos {
+    transition: transform 1s ease;    
+    transform: translateX(0%)
+}
 
 #loading {
     position: absolute;
