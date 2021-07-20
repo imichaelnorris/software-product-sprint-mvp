@@ -22,28 +22,61 @@
             margin-top: 4em;
             width: 450px !important
         }
+        
+        .mapclass {
+            display: flex;
+        }
+        
+        .mapinfo {
+            width: fit-content;
+        }
+        
+        .foodinfo {
+            display: flex;
+            justify-content: space-around;
+        }
     </style>
 </head>
 
-<body onload="wiki(window.location.search.split('=')[1]); updateImage();">
+<body onload="wiki(window.location.search.split('=')[1]); updateImage(); addFoodName();">
     <div class="container imageContainer" id="imageContainer" style="text-align: center;">
         <img src="./images/foodServe.PNG" class="img-fluid" width="80%" alt="..." />
+        <p id='foodname'></p>
     </div>
 
-    <div class="container" id="foodhistory"></div>
+    <div class="foodinfo">
+        <div>
+            <h3>Ingredients</h3>
+            <div class="ingredients">
+                <ul id="ingredientslist"></ul>
+            </div>
+        </div>
+        <div>
+            <h3>Food Info</h3>
+            <div class="container" id="foodhistory"></div>
+        </div>
+    </div>
 
     <script src="wikipediaApi.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
-    <div id='map' style='width: 400px; height: 300px;'></div>
+    <div class="mapclass">
+        <div id='map' style='width: 400px; height: 300px;'></div>
+        <div id='mapinfo' class="mapinfo">
+            <ul id="myList"></ul>
+        </div>
+    </div>
 
     <script>
         const lon = window.location.search.split("?")[1].split("&")[2].split("=")[1]
         const lat = window.location.search.split("?")[1].split("&")[1].split("=")[1]
         const food = window.location.search.split("?")[1].split("&")[0].split("=")[1]
-        const query = `https://api.edamam.com/api/menu-items/v2/search?app_id=2ba0ec45&app_key=ac665ae3e41a33e09736700ec5a0c738&q=${food}&lat=${lat}&lon=${lon}`
-
-        fetch(query).then(res => res.json()).then(data => {
+        const foodquery = `https://api.edamam.com/api/menu-items/v2/search?app_id=2ba0ec45&app_key=ac665ae3e41a33e09736700ec5a0c738&q=${food}&lat=${lat}&lon=${lon}`
+        const ingredientsquery = `https://api.edamam.com/api/recipes/v2?type=public&q=${food}&app_id=f000a577&app_key=c1001bda7a1c8a365f96750f7f9b562f`
+        fetch(ingredientsquery).then(res => res.json()).then(data => {
+            outPutIngredients(data)
+        })
+        fetch(foodquery).then(res => res.json()).then(data => {
             generateMap(data)
         })
 
@@ -58,23 +91,62 @@
                 container: 'map', // container ID
                 style: 'mapbox://styles/mapbox/streets-v11', // style URL
                 center: [lon, lat], // starting position [lng, lat]
-                zoom: 5 // starting zoom
+                zoom: 8 // starting zoom
             });
             new mapboxgl.Marker({
                     color: "red",
                     draggable: true
                 }).setLngLat([lon, lat])
                 .addTo(map);
-
-            return selectedPlaces.map(element => {
+            let color = ['green', 'blue', 'yellow', 'pink']
+            return selectedPlaces.map((element, index) => {
                 if (element.food.restaurant.location) {
+                    outPutMapData(element, color[index])
                     return new mapboxgl.Marker({
-                            color: "#FFFFFF ",
+                            color: color[index],
                             draggable: true
                         }).setLngLat([element.food.restaurant.location.lon, element.food.restaurant.location.lat])
                         .addTo(map);
                 }
             });
+        }
+
+        function outPutMapData(data, color) {
+            var node = document.createElement("li");
+            var textnode = document.createTextNode('Restaurant name: ' +
+                data.food.restaurant.address + ' | ' +
+                'Address: ' +
+                data.food.restaurant.postal);
+            node.appendChild(textnode);
+            node.style.color = color
+            document.getElementById("myList").appendChild(node);
+        }
+
+        function outPutIngredients(data) {
+            var foodlist
+            for (let i = 0; i < 20; i++) {
+                if (data.hits[i].recipe.label == food) {
+                    foodlist = data.hits[i].recipe.ingredientLines
+                    break
+                }
+            }
+            if (!foodlist) {
+                foodlist = data.hits[0].recipe.ingredientLines
+            }
+
+            foodlist.forEach(element => {
+                var node = document.createElement("li");
+                var textnode = document.createTextNode(element);
+                node.appendChild(textnode);
+                document.getElementById("ingredientslist").appendChild(node);
+            })
+        }
+
+        function addFoodName() {
+            const element = document.getElementById("foodname");
+            var node = document.createElement("h3");
+            node.innerHTML = food.replaceAll('%20', ' ');
+            element.appendChild(node);
         }
     </script>
 
