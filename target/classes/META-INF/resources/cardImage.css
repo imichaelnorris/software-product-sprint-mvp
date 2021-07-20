@@ -1,0 +1,163 @@
+.meal.card, .pref.card, .alg.card {
+    color: white;
+}
+
+.meal.card .card-body {
+    padding: 65% 10% !important;
+}
+
+.pref.card .card-body {
+    padding: 45% 10% !important;
+}
+
+.rec.foodcards .card{
+    margin: 1em 2em;
+}
+
+.clickable {
+    align-items: center;
+    overflow: hidden;
+}
+
+.clickable .card-body {
+    height: inherit;
+    width: inherit;
+    transition: transform .5s ease;
+}
+.clickable:not(.disabled) .card-body:hover {
+    transform: scale(1.1);
+}
+
+.clickable:not(.disabled):hover {
+    filter: brightness(85%);
+}
+
+.disabled {
+    filter: brightness(50%);
+    border: 3px solid rgb(243, 63, 63) !important;
+}
+
+.selected { 
+    filter: brightness(70%);
+    border: 3px solid rgb(120, 120, 253) !important;
+}
+
+
+#breakfastOpt {
+    background: linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05)), url("./images/card-bg/breakfast-bg.jpeg");
+    background-position: center;
+    background-size: cover;
+}
+
+#lunchDinnerOpt {
+    background: linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05)), url("./images/card-bg/lunch-bg.jpg");
+    background-position: center;
+    background-size: cover;
+}
+
+#dessertOpt {
+    background: linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05)), url("./images/card-bg/dessert-bg.png");
+    background-position: center;
+    background-size: cover;
+}
+
+#chickenOpt {
+    background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)), url("./images/card-bg/chicken-bg.jpg");
+    background-position: center;
+    background-size: cover;
+}
+
+#beefOpt {
+    background: linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05)), url("./images/card-bg/beef-bg.jpg");
+    background-position: center;
+    background-size: cover;
+}
+
+#porkOpt {
+    background: linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05)), url("./images/card-bg/pork-bg.jpg");
+    background-position: center;
+    background-size: cover;
+}
+
+#goatOpt {
+    background: linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05)), url("./images/card-bg/goat-bg.jpg");
+    background-position: center;
+    background-size: cover;
+}
+
+#lambOpt {
+    background: linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05)), url("./images/card-bg/lamb-bg.jpg");
+    background-position: center;
+    background-size: cover;
+}
+
+#seafoodOpt {
+    background: linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05)), url("./images/card-bg/seafood-bg.jpg");
+    background-position: center;
+    background-size: cover;
+}
+
+#pastaOpt {
+    background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)), url("./images/card-bg/pasta-bg.jpg");
+    background-position: center;
+    background-size: cover;
+}
+
+#vegetarianOpt {
+    background: linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05)), url("./images/card-bg/veggie-bg.jpg");
+    background-position: center;
+    background-size: cover;
+}
+
+#veganOpt {
+    background: linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05)), url("./images/card-bg/vegan-bg.png");
+    background-position: center;
+    background-size: cover;
+}
+
+/* Allergies */
+#alcoholAlrgy {
+    background: linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05)), url("./images/card-bg/alcohol.jpg");
+    background-position: center;
+    background-size: cover;
+}
+#eggAlrgy {
+    background: linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05)), url("./images/card-bg/egg.jfif");
+    background-position: center;
+    background-size: cover;
+}
+#fishAlrgy {
+    background: linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05)), url("./images/card-bg/fish.jpg");
+    background-position: center;
+    background-size: cover;
+}
+#glutenAlrgy {
+    background: linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05)), url("./images/card-bg/gluten.jpg");
+    background-position: center;
+    background-size: cover;
+}
+#peanutAlrgy {
+    background: linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05)), url("./images/card-bg/peanut.jpg");
+    background-position: center;
+    background-size: cover;
+}
+#shellfishAlrgy {
+    background: linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05)), url("./images/card-bg/shellfish.jpg");
+    background-position: center;
+    background-size: cover;
+}
+#soyAlrgy {
+    background: linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05)), url("./images/card-bg/soy.jpg");
+    background-position: center;
+    background-size: cover;
+}
+#tree-nutAlrgy {
+    background: linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05)), url("./images/card-bg/tree-nut.jpg");
+    background-position: center;
+    background-size: cover;
+}
+#wheatAlrgy {
+    background: linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05)), url("./images/card-bg/wheat.jpg");
+    background-position: center;
+    background-size: cover;
+}
