@@ -13,7 +13,7 @@
     <script src="foodRecommendationAPI.js"></script>
 
     <style>
-        /* div {
+        /* div, img {
             border: 1px solid black;
         } */
         /* .hidden {
@@ -26,10 +26,18 @@
     </style> 
 </head>
 
-<body onload="hideFunction('section2','loading'); initDB();">
+
+
+<body onload="pageInit()" style="overflow-x: hidden;">
     <div class="bg section1" id="section1" style="position: relative;">
+        <div id="loading">
+            <header></header> 
+            <img id="loading-image" src="./images/loading.gif" alt="Loading..." />
+            <footer></footer>
+        </div>
+
         <!-- Header -->
-        <div class="logo">
+        <div class="logo" id="logo">
             <img src="./images/myfoodie.png" class="logoimage" />
             <div class="logotitle">
                 <h4 style="color: white; font-family: Georgia, 'Times New Roman', Times, serif;">MyFoodie</h4>
@@ -67,7 +75,7 @@
                             </div>
                         </div> 
                         <div class="backNextClass justify-content-end">
-                            <button type="button" class="btn btn-dark" onclick="showElement('div2')">
+                            <button type="button" class="btn btn-dark" onclick="slideOriginal('div2')">
                                 Next
                             </button>
                         </div>
@@ -152,10 +160,10 @@
                         </div>
                     </div>
                     <div class="backNextClass">
-                        <button type="button" class="btn btn-dark" onclick="hideElement('div2')">
+                        <button type="button" class="btn btn-dark" onclick="slideRight('div2')">
                             Back
                         </button>
-                        <button type="button" class="btn btn-dark" onclick="showElement('div3')">
+                        <button type="button" class="btn btn-dark" onclick="slideOriginal('div3');">
                             Next
                         </button>
                     </div>
@@ -236,10 +244,10 @@
                         </div>
                     </div>
                     <div class="backNextClass">
-                        <button type="button" class="btn btn-dark" onclick="hideElement('div3')">
+                        <button type="button" class="btn btn-dark" onclick="slideRight('div3')">
                             Back
                         </button>
-                        <button type="button" class="btn btn-dark" id="suggest" onclick="foodFunctionCaller()">
+                        <button type="button" class="btn btn-dark" id="suggest" onclick=" foodFunctionCaller();">
                             Recommend Me Food!
                         </button>
                     </div>
@@ -248,33 +256,37 @@
         </div>
 <!-- -------------------------------------------------------------------------------------------------- -->
         <script> 
-            $(document).ready(
-                function(){
-                    $( "[name*='switch']" ).click(
-                        function(){
-                            toggleElement("div1","div2");
-                        }
-                    );
-
-                    $( "[name*='toggle-']" ).click(
-                        function(){
-                            var trigger_id = $(this).attr("name").replace("toggle-", "");
-                            toggleElement(trigger_id);
-                        }
-                    );
-            });
-
             function toggleElement(...arr) {
                 for(var id of arr)
                     var isVisible = $("#" + id).css('display') == "none" ? showElement(id) : hideElement(id);
             }
             
-            function showElement(id) { 
-                $("#" + id).show(); 
+            function showElement(id, time = 0) { 
+                $("#" + id).fadeIn(time); 
             }
 
-            function hideElement(id) { 
-                $("#" + id).hide(); 
+            function hideElement(id, time = 0) { 
+                $("#" + id).fadeOut(time); 
+            }
+
+            function slideRight(...ids) {
+                for(var id of ids) {
+                    $("#" + id).removeClass("originalPos"); console.log("SR 1")
+                    $("#" + id).addClass("slideRight"); console.log("SR 2")
+                    setTimeout(function() {
+                        hideElement(id); console.log("SR 3")
+                    }, 1000)
+                }         
+            }
+
+            function slideOriginal(...ids) {
+                for(var id of ids) {
+                    showElement(id); console.log("SO 1")
+                    $("#" + id).addClass("originalPos"); console.log("SO 2")
+                    setTimeout(function() {
+                        $("#" + id).removeClass("slideRight"); console.log("SO 3")
+                    }, 1000)
+                }              
             }
 
             function disableOptions(...arr) {
@@ -321,7 +333,7 @@
                     disableOptions("lunchDinner","egg","gluten","wheat")
                 }
                 else {
-                    enableOptions("lunchDinner")
+                    enableOptions("lunchDinner","egg","gluten","wheat")
                 }
                 if($("#lunchDinnerOpt").parent().hasClass("selected")) {
                     disableOptions("breakfast")
@@ -333,21 +345,14 @@
         </script>
 
         <div class="buttonClass">
-            <button type="button" class="btn btn-dark" id="suggest" onclick="foodFunctionCaller(); hideFunction('section2')">Suggest Random Food</button>
+            <button type="button" class="btn btn-dark" id="suggest" onclick="foodFunctionCaller(); ">Suggest Random Food</button>
             <!-- <a href="#section2" class="btn btn-dark">Suggest Random Food</a> -->
         </div>
     </div>
 
-    
-    <div id="loading">
-        <img id="loading-image" src="./images/loading.gif" alt="Loading..." />
-    </div>
-
     <!-- TODO: add section for user location -->
-    <div class="section2" id="section2">
-        
-
-        <div class="secondsection">
+    <div class="section2 hideelement" id="section2">
+         <div class="secondsection">
             <h2>Food List</h2>
         </div>
         <div class="rec foodcards justify-content-center">
@@ -380,14 +385,20 @@
 
 
     <script>
+        function pageInit() {
+            initDB();
+            slideRight('div2','div3');
+            hideElement('loading', 400);
+        }
+
         let initialImageSource = document.getElementsByClassName("card-img-top")[0].src
         var isGenerated = false;
 
         function foodFunctionCaller() {
-            setTimeout(function() {
-                genRecommendationUpdate()
-                showRecommendations()
-            }, 7000);
+            showElement('loading');
+            hideFunction('section2');
+            genRecommendationUpdate();
+            showRecommendations();
         }
 
         function hideFunction(...ids) {
@@ -395,6 +406,20 @@
                 var element = document.getElementById(id);
                 element.classList.add("hideelement");
             }
+        }
+
+        function showRecommendations() {
+            setTimeout( function() {
+                hideElement('loading', 400);
+                
+                var element = document.getElementById("section2");
+                var isShown = false;
+
+                element.classList.remove("hideelement");
+                $('html,body').animate({
+                    scrollTop: $(".section2").offset().top
+                },'slow');
+            }, 3000);
         }
 
         $("#breakfastMeal").click(function() {
@@ -408,6 +433,7 @@
                 $("input.not-breakfast").removeAttr("disabled");
             }
         })
+
         $("#lunchDinnerMeal").click(function() {
             if (this.checked) {
                 $("#breakfastMeal").prop("checked", false);
@@ -416,19 +442,6 @@
                 $("#breakfastMeal").removeAttr("disabled");
             }
         })
-
-        function showRecommendations() {
-            var element = document.getElementById("section2");
-            var isShown = false;
-
-            element.classList.remove("hideelement");
-            $('html,body').animate({
-                    scrollTop: $(".section2").offset().top
-                },
-                'slow');
-            var loader = document.getElementById("loading");
-            loader.classList.add("hideelement");
-        }
 
         $("#suggest").click(function() {
 
@@ -439,7 +452,6 @@
                 },
                 'slow');
         });
-
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
     </script>
