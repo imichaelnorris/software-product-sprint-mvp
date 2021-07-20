@@ -51,6 +51,7 @@ function genRecommendationUpdate() {
 
     $(".selected:not('.alg')").each(function() { 
         var option = $(this).children().attr('id').replace('Opt','')
+        console.log(option)
         if(option !== 'lunchDinner')
             options.push(option)
     })

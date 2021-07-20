@@ -29,6 +29,14 @@
             margin-top: 4em;
             width: 450px !important
         }
+        
+        .mapclass {
+            display: flex;
+        }
+        
+        .mapinfo {
+            width: fit-content;
+        }
     </style>
 </head>
 
@@ -81,6 +89,15 @@
 
 
 
+<<<<<<< HEAD
+=======
+    <div class="mapclass">
+        <div id='map' style='width: 400px; height: 300px;'></div>
+        <div id='mapinfo' class="mapinfo">
+            <ul id="myList"></ul>
+        </div>
+    </div>
+>>>>>>> last-touches
 
     <script>
         const lon = window.location.search.split("?")[1].split("&")[3].split("=")[1]
@@ -108,23 +125,35 @@
                 container: 'map', // container ID
                 style: 'mapbox://styles/mapbox/streets-v11', // style URL
                 center: [lon, lat], // starting position [lng, lat]
-                zoom: 5 // starting zoom
+                zoom: 8 // starting zoom
             });
             new mapboxgl.Marker({
                     color: "red",
                     draggable: true
                 }).setLngLat([lon, lat])
                 .addTo(map);
-
-            return selectedPlaces.map(element => {
+            let color = ['green', 'blue', 'yellow', 'pink']
+            return selectedPlaces.map((element, index) => {
                 if (element.food.restaurant.location) {
+                    outPutMapData(element, color[index])
                     return new mapboxgl.Marker({
-                            color: "#FFFFFF ",
+                            color: color[index],
                             draggable: true
                         }).setLngLat([element.food.restaurant.location.lon, element.food.restaurant.location.lat])
                         .addTo(map);
                 }
             });
+        }
+
+        function outPutMapData(data, color) {
+            var node = document.createElement("li");
+            var textnode = document.createTextNode('Restaurant name: ' +
+                data.food.restaurant.address + ' | ' +
+                'Address: ' +
+                data.food.restaurant.postal);
+            node.appendChild(textnode);
+            node.style.color = color
+            document.getElementById("myList").appendChild(node);
         }
     </script>
 

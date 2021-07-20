@@ -103,7 +103,6 @@ label.form-check-label {
 #div1,
 #div2,
 #div3 {
-    z-index: 0;
     position: absolute;
     overflow: hidden !important;
     height: 48em !important;
