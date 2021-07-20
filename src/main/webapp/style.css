@@ -36,6 +36,10 @@ label.form-check-label {
     margin-top: 20%;
 }
 
+.overflow-y-hidden {
+    overflow-y: hidden !important;
+}
+
 .form-check {
     padding-left: 2em !important;
 }
