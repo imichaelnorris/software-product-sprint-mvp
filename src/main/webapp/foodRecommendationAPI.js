@@ -51,7 +51,6 @@ function genRecommendationUpdate() {
 
     $(".selected:not('.alg')").each(function() { 
         var option = $(this).children().attr('id').replace('Opt','')
-        console.log(option)
         if(option !== 'lunchDinner')
             options.push(option)
     })
@@ -59,7 +58,6 @@ function genRecommendationUpdate() {
     $(".selected.alg").each(function() { 
         var allergy = $(this).children().attr('id').replace('Alrgy','-free')
         tags += "&health=" + allergy;
-        console.log(tags)
     })
     
     getLocation(options, tags)
@@ -100,7 +98,6 @@ async function convertToEdamamObjects(options, tags, response) {
     locationData = response
     const foodList = randomRec(options, 3);
     var temp = {}
-    console.log("in convertToEdamamObjects")
 
     for (var foodName of foodList) {
         var response = null;
@@ -190,7 +187,6 @@ function randomRec(categories, numItems) {
     for(var c of categories) {
         for(let i = 0; i < MealDB[c].length; i++) {
             availItems.push(MealDB[c][i].strMeal)
-            console.log(availItems)
         }
     }
 
@@ -199,8 +195,6 @@ function randomRec(categories, numItems) {
         temp.push(availItems[index])
         availItems.splice(index, 1)
     }
-
-    console.log(temp)
 
     return temp;
 }
