@@ -29,7 +29,7 @@ async function wiki(food) {
     let response = await apiCall(url)
     console.log(response)
     if (response && response.substr(0, 3) != '<!--' &&
-        response.search('limit') == -1 && !newresponse.includes('may refer to')) {
+        response.search('limit') == -1 && !response.includes('may refer to')) {
         addData(response)
         return
     }
